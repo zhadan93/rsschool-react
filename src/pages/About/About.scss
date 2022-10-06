@@ -1,0 +1,29 @@
+@import '../../styles/constants';
+
+.about {
+  &__avatar {
+    width: 200px;
+    height: 200px;
+  }
+
+  &__avatar-img {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 20px;
+  }
+
+  &__name {
+    font-size: 22px;
+  }
+
+  .contacts {
+    display: flex;
+    column-gap: 5px;
+  }
+
+  &__contact-icon {
+    width: 20px;
+    height: 20px;
+  }
+}

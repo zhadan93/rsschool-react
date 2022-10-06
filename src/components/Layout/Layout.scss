@@ -1,0 +1,15 @@
+@import '../../styles/constants';
+
+.main {
+  min-height: calc(100vh - 78px);
+
+  color: $main-text;
+  background: $main-background;
+}
+
+.container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px 20px;
+}

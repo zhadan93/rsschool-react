@@ -1,0 +1,84 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.not-found {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__error-code {
+    color: $error-code;
+    font-size: 180px;
+
+    @include tablet-lower {
+      font-size: 162px;
+    }
+
+    @include mobile-middle {
+      font-size: 144px;
+    }
+  }
+
+  &__header {
+    font-size: 35px;
+
+    @include tablet-lower {
+      font-size: 31px;
+    }
+
+    @include mobile-middle {
+      font-size: 28px;
+    }
+  }
+
+  &__text {
+    margin-bottom: 40px;
+
+    font-size: 20px;
+    text-align: center;
+
+    @include tablet-lower {
+      margin-bottom: 36px;
+
+      font-size: 18px;
+    }
+
+    @include mobile-middle {
+      margin-bottom: 32px;
+
+      font-size: 16px;
+    }
+  }
+
+  &__btn {
+    font-size: 20px;
+    color: $btn-text;
+
+    background: transparent;
+    border: 3px solid $btn;
+    border-radius: 10px;
+    padding: 10px 20px;
+
+    transition: 0.5s;
+
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      color: $hover-btn;
+      border-color: $hover-btn;
+    }
+
+    @include tablet-lower {
+      font-size: 18px;
+      padding: 9px 18px;
+    }
+
+    @include mobile-middle {
+      font-size: 16px;
+      padding: 8px 16px;
+    }
+  }
+}

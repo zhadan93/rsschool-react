@@ -1,0 +1,14 @@
+@import './constants';
+
+/* Responsive media */
+@mixin mobile-middle {
+  @media (max-width: $mobile-middle) {
+    @content;
+  }
+}
+
+@mixin tablet-lower {
+  @media (max-width: $tablet-lower) {
+    @content;
+  }
+}

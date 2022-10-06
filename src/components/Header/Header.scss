@@ -1,0 +1,66 @@
+@import '../../styles/constants';
+
+.header {
+  position: sticky;
+  top: 0;
+
+  background: $header-background;
+  font-size: 25px;
+
+  &__container {
+    padding-top: 20px;
+  }
+
+  .nav {
+    display: flex;
+    column-gap: 20px;
+      
+    list-style: none;
+    
+    &__link {
+      position: relative;
+  
+      color: $nav-text;
+      text-shadow: 0 0 1.5px $active-nav-text;
+      font-weight: 700;
+    
+      text-decoration: none;
+    
+      transition: 0.5s;
+    
+      &::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 4px;
+  
+        transition: 0.5s;
+      }
+  
+      &:hover {
+        text-shadow: 2px 2px 3px $nav-shadow;
+  
+        &::after {
+          width: 110%;
+  
+          background-color: $nav-text;
+          box-shadow: 2px 2px 3px $nav-shadow;
+        }
+      }
+  
+      &--active {
+        color: $active-nav-text;
+        text-shadow: 0 0 0 transparent;
+  
+        &:hover {
+          text-shadow: 2px 2px 3px $active-nav-shadow;
+  
+          &::after {
+            background-color: $active-nav-text;
+            box-shadow: 2px 2px 3px $active-nav-shadow;
+          }
+        }
+      }
+    }
+  }
+}
