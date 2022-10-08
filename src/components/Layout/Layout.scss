@@ -1,10 +1,10 @@
 @import '../../styles/constants';
+@import '../../styles/mixins';
 
 .main {
   min-height: calc(100vh - 78px);
-
+  padding-top: 20px;
   color: $main-text;
-  background: $main-background;
 }
 
 .container {
@@ -12,4 +12,8 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 20px 20px;
+
+  @include mobile-middle {
+    padding: 0 10px 10px;
+  }
 }

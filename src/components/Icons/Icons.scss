@@ -13,3 +13,19 @@
     fill: $hover-contacts-icon;
   }
 }
+
+.favorite-icon {
+  fill: $favorite;
+
+  transition: 0.5s;
+
+  &:hover {
+    fill: $hover-contacts-icon;
+  }
+}
+
+.magnifier-icon {
+  fill: $favorite;
+
+  transition: 0.5s;
+}

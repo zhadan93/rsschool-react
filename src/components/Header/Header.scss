@@ -3,11 +3,14 @@
 .header {
   position: sticky;
   top: 0;
-
+  z-index: 2;
+  
   background: $header-background;
   font-size: 25px;
 
   &__container {
+    display: flex;
+    justify-content: space-between;
     padding-top: 20px;
   }
 
@@ -21,7 +24,6 @@
       position: relative;
   
       color: $nav-text;
-      text-shadow: 0 0 1.5px $active-nav-text;
       font-weight: 700;
     
       text-decoration: none;
@@ -37,27 +39,24 @@
         transition: 0.5s;
       }
   
-      &:hover {
-        text-shadow: 2px 2px 3px $nav-shadow;
-  
+      &:hover {  
+        color: $hover-nav-text;
+
         &::after {
           width: 110%;
   
-          background-color: $nav-text;
-          box-shadow: 2px 2px 3px $nav-shadow;
+          background-color: $hover-nav-text;
         }
       }
   
       &--active {
         color: $active-nav-text;
-        text-shadow: 0 0 0 transparent;
   
         &:hover {
-          text-shadow: 2px 2px 3px $active-nav-shadow;
-  
+          color: $hover-nav-text;
+
           &::after {
-            background-color: $active-nav-text;
-            box-shadow: 2px 2px 3px $active-nav-shadow;
+            background-color: $hover-nav-text;
           }
         }
       }

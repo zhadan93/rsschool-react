@@ -6,7 +6,7 @@ import evgeniia from '../../assets/img/zhadan.jpg';
 
 import './About.scss';
 
-const About = () => {
+const About = (): JSX.Element => {
   return (
     <div className="about">
       <div className="container">

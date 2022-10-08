@@ -1,8 +1,26 @@
 @import './constants';
 
 /* Responsive media */
-@mixin mobile-middle {
-  @media (max-width: $mobile-middle) {
+@mixin desktop-highest {
+  @media (max-width: $desktop-highest) {
+    @content;
+  }
+}
+
+@mixin desktop-middle {
+  @media (max-width: $desktop-middle) {
+    @content;
+  }
+}
+
+@mixin desktop-bottom {
+  @media (max-width: $desktop-bottom) {
+    @content;
+  }
+}
+
+@mixin tablet-middle {
+  @media (max-width: $tablet-middle) {
     @content;
   }
 }
@@ -10,5 +28,35 @@
 @mixin tablet-lower {
   @media (max-width: $tablet-lower) {
     @content;
+  }
+}
+
+@mixin mobile-high {
+  @media (max-width: $mobile-high) {
+    @content;
+  }
+}
+
+@mixin mobile-middle {
+  @media (max-width: $mobile-middle) {
+    @content;
+  }
+}
+
+@mixin media-card-text {
+  @include desktop-highest {
+    font-size: 1.3vw;
+  }
+
+  @include desktop-bottom {
+    font-size: 25px;
+  }
+
+  @include tablet-middle {
+    font-size: 2.2vw;
+  }
+
+  @include mobile-middle {
+    font-size: 10px;
   }
 }

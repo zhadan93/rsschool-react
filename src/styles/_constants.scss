@@ -1,27 +1,34 @@
 /* Colors */
 $nav-text: #fff;
-$active-nav-text: #5631fb;
+$active-nav-text: #9370db;
+$hover-nav-text: #d3beff;
 
-$contacts-icon: #5631fb;
-$hover-contacts-icon: #bcb0ff;
+$contacts-icon: #9370db;
+$hover-contacts-icon: #d3beff;
 
-$main-background: #fff;
-$header-background: linear-gradient(#bcb0ff, #d2caff, #e2deff, rgba(255, 255, 255, 0.8));
+$header-background: linear-gradient(#000000, #0d0d0d, rgb(13, 13, 13, 0.4));
 
-$nav-shadow: rgba(86, 49, 251, 0.5);
-$active-nav-shadow: #fff;
+$main-text: #fff;
+$characteristics-text: #1e1e1e;
 
-$main-text: #444444;
+$error-code: #9370db;
 
-$error-code: #5631fb;
+$btn: #9370db;
+$hover-btn: #d3beff;
+$btn-text: #9370db;
 
-$btn: #5631fb;
-$hover-btn: #bcb0ff;
-$btn-text: #5631fb;
-
+$card-text: #fff;
+$card-text-background: rgba(0, 0, 0, 0.3);
+$card-characteristics-background: rgba(211, 190, 255, 0.8);
+$favorite: #fff;
+$active-favorite: #9370db;
 
 /* Break points */
+$desktop-highest: 1920px;
+$desktop-middle: 1400px;
+$desktop-bottom: 1200px;
+
+$tablet-middle: 860px;
 $tablet-lower: 767px;
 
-$mobile-middle: 480px;
 $mobile-middle: 480px;

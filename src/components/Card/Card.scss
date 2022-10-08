@@ -1,0 +1,226 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 903px;
+  height: 477px;
+
+  border-radius: 20px;
+  overflow-x: hidden;
+
+  cursor: pointer;
+
+  @include desktop-highest {
+    min-width: 564px;
+    width: 47vw;
+    height: 24.8vw;
+  }
+
+  @include desktop-bottom {
+    min-width: 0;
+    width: 807px;
+    height: 413px;
+  }
+
+  @include tablet-middle {
+    width: 100%;
+    height: 48vw;
+  }
+
+  @include mobile-middle {
+    border-radius: 12px;
+  }
+
+  &__img {
+    height: inherit;
+    width: 100%;
+
+    border-radius: 20px;
+
+    @include mobile-middle {
+      border-radius: 12px;
+    }
+  }
+
+  &__main-content {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    width: 50%;
+    padding: 15px 10px;
+
+    background-color: $card-text-background;
+    border-radius: 10px;
+
+    @include tablet-middle {
+      top: 17%;
+      left: 4%;
+      padding: 7px 5px;
+    }
+
+    @include mobile-middle {
+      top: 10%;
+    }
+  }
+
+  &__name {
+    margin-bottom: 17.5px;
+    font-size: 38.4px;
+    color: $card-text;
+
+    @include desktop-highest {
+      margin-bottom: 0.9vw;
+      font-size: 2vw;
+    }
+
+    @include desktop-bottom {
+      margin-bottom: 17.5px;
+      font-size: 38.4px;
+    }
+
+    @include tablet-middle {
+      margin-bottom: 1.5vw;
+      font-size: 4vw;
+    }
+
+    @include mobile-middle {
+      font-size: 15px;
+    }
+  }
+
+  &__description{
+    text-align: justify;
+    font-size: 25px;
+    color: $card-text;
+
+    @include media-card-text;
+    /*@include desktop-highest {
+      font-size: 1.3vw;
+    }
+
+    @include desktop-bottom {
+      font-size: 25px;
+    }
+
+    @include tablet-middle {
+      font-size: 2.2vw;
+    }
+
+    @include mobile-middle {
+      font-size: 10px;
+    }*/
+  }
+
+  &__favorite-icon {
+    position: absolute;
+    left: 19.2px;
+    bottom: 19.2px;
+
+    @include desktop-highest {
+      left: 1vw;
+      bottom: 1vw;
+    }
+
+    @include desktop-middle {
+      width: 2.23vw;
+      height: 2.23vw;
+    }
+
+    @include desktop-bottom {
+      left: 19.2px;
+      bottom: 19.2px;
+      width: 30px;
+      height: 30px;
+    }
+
+    @include tablet-middle {
+      left: 2.2vw;
+      bottom: 2.2vw;
+      min-width: 18px;
+      min-height: 18px;
+      width: 3.4vw;
+      height: 3.4vw;
+    }
+  }
+
+  .favorite-icon--active {
+    fill: $active-favorite;
+
+    &:hover {
+      fill: $hover-contacts-icon;
+    }
+  }
+
+  &__characteristics {
+    position: absolute;
+    top: 0;
+    right: -35%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+
+    font-size: 25px;
+    color: $characteristics-text;
+    text-align: left;
+
+    background-color: $card-characteristics-background;
+
+    transition: 0.7s;
+
+    @include media-card-text;
+
+    @include tablet-middle {
+      padding: 0 10px;
+    }
+
+    @include mobile-middle {
+      padding: 0 5px;
+    }
+  }
+
+  &:hover &__characteristics {
+    right: 0;
+  }
+
+  &__characteristic {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    text-align: right;
+  }
+
+  &__dotted-line {
+    align-self: baseline;
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+    border-bottom: 2px dotted $characteristics-text;
+
+    @include desktop-highest {
+      margin-top: 1.3vw;
+    }
+  
+    @include desktop-bottom {
+      margin-top: 25px;
+    }
+  
+    @include tablet-middle {
+      margin-top: 2.2vw;
+      border-bottom: 1px dotted $characteristics-text;
+    }
+  
+    @include mobile-middle {
+      margin-top: 10px;
+    }
+  }
+}

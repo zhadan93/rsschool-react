@@ -1,0 +1,99 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.searchbar {
+  position: relative;
+  width: 380px;
+  margin-left: auto;
+  margin-right: 0;
+  margin-bottom: 20px;
+
+  @include tablet-lower {
+    width: 49.3vw;
+  }
+
+  @include mobile-middle {
+    margin-bottom: 12px;
+  }
+
+  &__input {
+    padding-left: 45px;
+
+    @include tablet-lower {
+      padding: 1.3vw 2.2vw;
+      padding-left: 5.8vw;
+
+      font-size: 3vw;
+    }
+
+    @include mobile-middle {
+      padding: 6px 10px;
+      padding-left: 25px;
+
+      font-size: 10px;
+    }
+    
+    &:focus {
+      @include mobile-middle {
+        box-shadow: inset -1px -1px 4px $hover-nav-text;;
+      }
+    }
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      display: inline-block;
+      width: 19px;
+      height: 19px;
+      margin-left: 10px;
+      margin-right: -2px;
+
+      background:
+        linear-gradient(45deg, transparent 0%, transparent 43%, $btn 45%, $btn 55%, transparent 57%, transparent 100%),
+        linear-gradient(135deg, transparent 0%, transparent 43%, $btn 45%, $btn 55%, transparent 57%, transparent 100%);
+
+      cursor: pointer;
+
+      @include tablet-lower {
+        width: 2.49vw;
+        height: 2.49vw;
+        margin-left: 1.2vw;
+      }
+  
+      @include mobile-middle {
+        width: 10px;
+        height: 10px;
+        margin-left: 4px;
+      }
+
+      &:hover {
+        background:
+          linear-gradient(45deg, transparent 0%, transparent 43%, $hover-btn 45%, $hover-btn 55%, transparent 57%, transparent 100%),
+          linear-gradient(135deg, transparent 0%, transparent 43%, $hover-btn 45%, $hover-btn 55%, transparent 57%, transparent 100%);
+      }
+    }
+  }
+
+  &__magnifier-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    z-index: -1;
+
+    transform: translateY(-50%);
+
+    @include tablet-lower {
+      width: 3.9vw;
+      height: 3.9vw;
+    }
+
+    @include mobile-middle {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover .input {
+      border-color: $hover-nav-text;
+    }
+  }
+}
+

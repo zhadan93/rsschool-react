@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 
 import './Header.scss';
 
-const Header = () => {
-  const linkClassName = 'nav__link';
-  const activeLinkClassName = 'nav__link--active';
+const Header = (): JSX.Element => {
+  const setLinkClassName = (isActive: boolean) =>
+    classNames('nav__link', { 'nav__link--active': isActive });
 
   return (
     <header className="header">
@@ -13,20 +14,12 @@ const Header = () => {
         <nav>
           <ul className="nav">
             <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) => `${linkClassName} ${isActive && activeLinkClassName}`}
-                end
-              >
+              <NavLink to="/" className={({ isActive }) => setLinkClassName(isActive)} end>
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="about"
-                className={({ isActive }) => `${linkClassName} ${isActive && activeLinkClassName}`}
-                end
-              >
+              <NavLink to="about" className={({ isActive }) => setLinkClassName(isActive)} end>
                 About
               </NavLink>
             </li>

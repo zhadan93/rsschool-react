@@ -2,7 +2,7 @@ import React from 'react';
 
 import './NotFound.scss';
 
-const NotFound = () => {
+const NotFound = (): JSX.Element => {
   return (
     <div className="not-found">
       <div className="container not-found__container">

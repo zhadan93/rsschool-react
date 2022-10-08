@@ -4,15 +4,13 @@ import { Outlet } from 'react-router-dom';
 import './Layout.scss';
 import Header from 'components/Header';
 
-type LayoutProps = {
-  content?: JSX.Element;
-};
-
-const Layout = ({ content }: LayoutProps) => {
+const Layout = (): JSX.Element => {
   return (
     <>
       <Header />
-      <main className="main">{content || <Outlet />}</main>
+      <main className="main">
+        <Outlet />
+      </main>
     </>
   );
 };

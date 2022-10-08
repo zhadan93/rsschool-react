@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import './Icons.scss';
 
 type IconsProps = {
@@ -6,13 +7,13 @@ type IconsProps = {
   className?: string;
 };
 
-const Icons = ({ id, className }: IconsProps) => {
+const Icons = ({ id, className }: IconsProps): JSX.Element | null => {
   switch (id) {
     case 'telegram':
       return (
         <svg
           version="1.1"
-          className={`contact-icon ${className}`}
+          className={classNames('contact-icon', className)}
           width="30"
           height="30"
           id="telegram"
@@ -40,7 +41,7 @@ const Icons = ({ id, className }: IconsProps) => {
       return (
         <svg
           fill="none"
-          className={`contact-icon ${className}`}
+          className={classNames('contact-icon', className)}
           width="30"
           height="30"
           viewBox="0 0 30 30"
@@ -55,7 +56,7 @@ const Icons = ({ id, className }: IconsProps) => {
       return (
         <svg
           fill="none"
-          className={`contact-icon ${className}`}
+          className={classNames('contact-icon', className)}
           width="30"
           height="30"
           viewBox="0 0 512 512"
@@ -68,6 +69,36 @@ const Icons = ({ id, className }: IconsProps) => {
           />
           <ellipse cx="196" cy="279" rx="33" ry="35" />
           <ellipse cx="312" cy="279" rx="33" ry="35" />
+        </svg>
+      );
+
+    case 'favorite':
+      return (
+        <svg
+          fill="none"
+          className={classNames('favorite-icon', className)}
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            <path d="M19.7,0.5H4.3c-2.1,0-3.8,1.7-3.8,3.8v15.4c0,2.1,1.7,3.8,3.8,3.8h15.4c2.1,0,3.8-1.7,3.8-3.8V4.3   C23.5,2.2,21.8,0.5,19.7,0.5z M9.4,18.1c-0.2,0-0.3,0.1-0.4,0.1c-0.2,0-0.7-0.1-0.7-0.8c0.3-2.2-0.5-2.9-1.5-3.8   C6,12.8,5.1,11.9,4.9,10C4.9,8.9,5.3,7.9,6,7.1c0.7-0.8,1.8-1.2,2.8-1.3h0c1.4,0,2.7,0.7,3.4,1.9c0.7-0.9,1.8-1.4,3-1.4l0.1,0   c1,0,2,0.5,2.7,1.3c0.7,0.8,1.1,1.8,1.1,2.9C19,13.6,15.7,16.2,9.4,18.1z" />
+          </g>
+        </svg>
+      );
+
+    case 'magnifier':
+      return (
+        <svg
+          fill="none"
+          className={classNames('magnifier-icon', className)}
+          width="30"
+          height="30"
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" />
         </svg>
       );
 

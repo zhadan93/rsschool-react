@@ -1,10 +1,15 @@
 import React from 'react';
 
-const Home = () => {
+import CardList from 'components/CardList';
+import CardData from 'data/cardData';
+import Searchbar from 'components/Searchbar';
+
+const Home = (): JSX.Element => {
   return (
     <div>
       <div className="container">
-        <h2>Home</h2>
+        <Searchbar />
+        <CardList data={CardData} />
       </div>
     </div>
   );
