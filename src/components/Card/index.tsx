@@ -5,13 +5,13 @@ import Icons from 'components/Icons';
 
 import './Card.scss';
 
-import { CardDataDetails } from '../../types/types';
+import { CardDetails } from '../../types/types';
 
 type CardProps = {
-  cardData: CardDataDetails;
+  cardData: CardDetails;
 };
 
-type CardState = Pick<CardDataDetails, 'favorite'>;
+type CardState = Pick<CardDetails, 'favorite'>;
 
 class Card extends Component<CardProps, CardState> {
   constructor(props: CardProps) {
@@ -52,12 +52,12 @@ class Card extends Component<CardProps, CardState> {
             </div>
           ))}
         </div>
-        <div className="card__favorite" onClick={this.handleFavoriteClick}>
+        <button className="card__favorite" onClick={this.handleFavoriteClick}>
           <Icons
             id="favorite"
             className={classNames('card__favorite-icon', { 'favorite-icon--active': favorite })}
           />
-        </div>
+        </button>
       </div>
     );
   }

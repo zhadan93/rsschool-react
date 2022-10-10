@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import './Input.scss';
-
-type InputProps = {
-  className?: string;
-  placeholder?: string;
-  type?: string;
-  searchValue: string;
-  onValueChange: (value: string) => void;
-};
+import { InputProps } from 'types/types';
 
 class Input extends Component<InputProps> {
   constructor(props: InputProps) {

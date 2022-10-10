@@ -8,7 +8,7 @@ import './About.scss';
 
 const About = (): JSX.Element => {
   return (
-    <div className="about">
+    <div data-testid="about" className="about">
       <div className="container">
         <h2>About Me</h2>
         <div className="about__personal-info">

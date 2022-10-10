@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import './CardList.scss';
 
 import Card from 'components/Card';
-import { CardDataDetails } from '../../types/types';
+import { CardDetails } from '../../types/types';
 
 interface CardListProps {
-  data: CardDataDetails[];
+  cardsData: CardDetails[];
 }
 
 class CardList extends Component<CardListProps> {
@@ -17,9 +17,13 @@ class CardList extends Component<CardListProps> {
   render(): JSX.Element {
     return (
       <div className="cards">
-        {this.props.data.map((cardData) => (
-          <Card key={cardData.id} cardData={cardData} />
-        ))}
+        <ul className="cards__list">
+          {this.props.cardsData.map((cardData) => (
+            <li className="cards__item" key={cardData.id}>
+              <Card cardData={cardData} />
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }

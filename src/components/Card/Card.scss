@@ -98,27 +98,16 @@
     color: $card-text;
 
     @include media-card-text;
-    /*@include desktop-highest {
-      font-size: 1.3vw;
-    }
-
-    @include desktop-bottom {
-      font-size: 25px;
-    }
-
-    @include tablet-middle {
-      font-size: 2.2vw;
-    }
-
-    @include mobile-middle {
-      font-size: 10px;
-    }*/
   }
 
   &__favorite-icon {
     position: absolute;
     left: 19.2px;
     bottom: 19.2px;
+
+    cursor: pointer;
+
+    transition: 0.5s;
 
     @include desktop-highest {
       left: 1vw;

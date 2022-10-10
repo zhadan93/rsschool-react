@@ -1,4 +1,4 @@
-const CardData = [
+const CardsData = [
   {
     id: 1,
     name: 'Бокалы для шампанского HW502',
@@ -72,4 +72,4 @@ const CardData = [
   },
 ];
 
-export default CardData;
+export default CardsData;
