@@ -44,13 +44,27 @@ class Card extends Component<CardProps, CardState> {
         </div>
         <div className="card__characteristics">
           <h3 className="card__characteristic-title">Characteristics</h3>
-          {Array.from(mapAttributes).map(([characteristic, value]) => (
-            <div key={characteristic} className="card__characteristic">
-              <span className="card__characteristic--bold">{characteristic}</span>
-              <span className="card__dotted-line"></span>
-              {value}
-            </div>
-          ))}
+          {Array.from(mapAttributes).map(([characteristic, value]) => {
+            let characteristicValue = value;
+            switch (characteristic) {
+              case 'cost':
+                characteristicValue = `${value} ₽`;
+                break;
+              case 'volume':
+                characteristicValue = `${value} ml`;
+                break;
+              default:
+                characteristicValue;
+                break;
+            }
+            return (
+              <div key={characteristic} className="card__characteristic">
+                <span className="card__characteristic--bold">{characteristic}</span>
+                <span className="card__dotted-line"></span>
+                <span>{characteristicValue}</span>
+              </div>
+            );
+          })}
         </div>
         <button className="card__favorite" onClick={this.handleFavoriteClick}>
           <Icons
