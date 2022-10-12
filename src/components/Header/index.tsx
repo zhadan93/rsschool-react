@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { NAV_PATHS } from '../../constants';
+
 import './Header.scss';
 
 const Header = (): JSX.Element => {
@@ -13,16 +15,13 @@ const Header = (): JSX.Element => {
       <div className="container header__container">
         <nav>
           <ul className="nav">
-            <li>
-              <NavLink to="/" className={({ isActive }) => setLinkClassName(isActive)} end>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="about" className={({ isActive }) => setLinkClassName(isActive)} end>
-                About
-              </NavLink>
-            </li>
+            {Object.entries(NAV_PATHS).map(([key, { name, path }]) => (
+              <li key={key}>
+                <NavLink to={path} className={({ isActive }) => setLinkClassName(isActive)} end>
+                  {name}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
@@ -31,3 +30,14 @@ const Header = (): JSX.Element => {
 };
 
 export default Header;
+
+/*<li>
+              <NavLink to="/" className={({ isActive }) => setLinkClassName(isActive)} end>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="about" className={({ isActive }) => setLinkClassName(isActive)} end>
+                About
+              </NavLink>
+            </li> */

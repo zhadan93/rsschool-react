@@ -4,25 +4,32 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
 import App from '../App';
-import renderWithRouter from '../../test/helpers';
+import routes from 'routes';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 describe('App component', () => {
-  test('render App', () => {
+  test('render App Home page', () => {
     render(<App />);
+    expect(screen.getByText(/home/i)).toBeInTheDocument();
     expect(screen.getByTestId('home')).toBeInTheDocument();
   });
 
   test('render NotFound component when navigating a non-existent route', () => {
-    const appWithRouting = renderWithRouter(['/', '/test']);
-    render(appWithRouting);
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/', '/test'],
+    });
+
+    render(<RouterProvider router={router} />);
+
     expect(screen.getByText('404')).toBeInTheDocument();
   });
 
-  test('Switch between About page and Home page', async () => {
-    const appWithRouting = renderWithRouter(['/']);
-    render(appWithRouting);
+  test('Route from About page to Home page', async () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/', '/about'],
+    });
 
-    await userEvent.click(screen.getByText('About'));
+    render(<RouterProvider router={router} />);
 
     expect(screen.getByTestId('about')).toBeInTheDocument();
 

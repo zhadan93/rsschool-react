@@ -53,9 +53,6 @@ class Card extends Component<CardProps, CardState> {
               case 'volume':
                 characteristicValue = `${value} ml`;
                 break;
-              default:
-                characteristicValue;
-                break;
             }
             return (
               <div key={characteristic} className="card__characteristic">

@@ -1,0 +1,23 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.btn {
+  font-size: 20px;
+  color: $btn;
+
+  background: transparent;
+  border: 3px solid $btn;
+  border-radius: 10px;
+  padding: 10px 20px;
+
+  transition: 0.5s;
+
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $hover-btn;
+    border-color: $hover-btn;
+    box-shadow: inset 0 0 10px $hover-btn;
+  }
+}

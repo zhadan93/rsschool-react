@@ -10,6 +10,8 @@ type SearchbarProps = {
   className?: string;
 };
 
+const localStorageSearchbarKey = 'cardsSearchBar';
+
 class Searchbar extends Component<SearchbarProps, SearchbarState> {
   constructor(props: SearchbarProps) {
     super(props);
@@ -18,14 +20,14 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
   }
 
   componentDidMount() {
-    const value = localStorage.getItem('cardsSearchBar');
+    const value = localStorage.getItem(localStorageSearchbarKey);
     if (value) {
       this.setState({ value });
     }
   }
 
   componentWillUnmount() {
-    localStorage.setItem('cardsSearchBar', this.state.value);
+    localStorage.setItem(localStorageSearchbarKey, this.state.value);
   }
 
   handleChange(value: string) {
