@@ -10,7 +10,7 @@ import { InputProps } from '../../types/types';
 describe('Input component', () => {
   test('render Input Component', () => {
     render(<Input {...InputData} />);
-    expect(screen.getByDisplayValue(InputData.searchValue)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(InputData.value)).toBeInTheDocument();
   });
 
   test('call the onChange callback handler', async () => {

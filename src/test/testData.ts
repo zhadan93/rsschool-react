@@ -24,6 +24,6 @@ export const testCardsData = [
 export const InputData = {
   placeholder: 'Search',
   type: 'search',
-  searchValue: 'test',
+  value: 'test',
   onValueChange: jest.fn(),
 };

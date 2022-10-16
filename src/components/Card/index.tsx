@@ -48,17 +48,16 @@ class Card extends Component<CardProps, CardState> {
             let characteristicValue = value;
             switch (characteristic) {
               case 'cost':
-                characteristicValue = `${value} ₽`;
+                characteristicValue = `${value}₽`;
                 break;
               case 'volume':
-                characteristicValue = `${value} ml`;
+                characteristicValue = `${value}ml`;
                 break;
             }
             return (
               <div key={characteristic} className="card__characteristic">
-                <span className="card__characteristic--bold">{characteristic}</span>
-                <span className="card__dotted-line"></span>
-                <span>{characteristicValue}</span>
+                <span className="card__characteristic-key">{characteristic}</span>
+                <span className="card__characteristic-value">{characteristicValue}</span>
               </div>
             );
           })}

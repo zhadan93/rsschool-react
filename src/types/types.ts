@@ -1,3 +1,5 @@
+import { ForwardedRef } from 'react';
+
 export interface CardDetails {
   id: number;
   name: string;
@@ -10,9 +12,18 @@ export interface CardDetails {
 }
 
 export type InputProps = {
+  id?: string;
+  label?: string;
   className?: string;
   placeholder?: string;
   type?: string;
-  searchValue: string;
-  onValueChange: (value: string) => void;
+  value?: string;
+  onValueChange?: (value: string | boolean) => void;
+  error?: string;
+  disabled?: boolean;
+  required?: boolean;
+  inputRef?: ForwardedRef<HTMLInputElement>;
+  accept?: string;
+  optionLabels?: string[];
+  isSwitch?: boolean;
 };

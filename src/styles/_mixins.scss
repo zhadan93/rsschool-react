@@ -31,8 +31,8 @@
   }
 }
 
-@mixin mobile-high {
-  @media (max-width: $mobile-high) {
+@mixin tablet-lowest {
+  @media (max-width: $tablet-lowest) {
     @content;
   }
 }

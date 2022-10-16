@@ -1,29 +1,196 @@
 @import '../../styles/constants';
 @import '../../styles/mixins';
 
-input {
-  display: block;
-  width: 100%;
-  padding: 10px 17px;
+.label {
+  font-size: 20px;
+}
 
-  color: $main-text;
-  font-size: 23px;
-  
-  border: 2px solid $nav-text;
-  border-radius: 25px;
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
 
-  background-color: transparent;
-
-  outline: 0;
-
-  transition: 0.5s;
-
-  &:hover {
-      border-color: $hover-nav-text;
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 10px 17px;
+    
+    color: $main-text;
+    font-size: 23px;
+      
+    border: 2px solid $nav-text;
+    border-radius: 25px;
+    
+    background-color: transparent;
+    
+    outline: 0;
+    
+    transition: 0.5s;
+    
+    &:hover {
+        border-color: $hover-nav-text;
+    }
+      
+    &:focus {
+        border-color: $active-nav-text;
+        box-shadow: inset -2px -2px 5px $hover-nav-text;
+    }
   }
+
+  &__search-input {
+    display: block;
+    width: 100%;
+    padding: 10px 17px;
+    
+    color: $main-text;
+    font-size: 23px;
+      
+    border: 2px solid $nav-text;
+    border-radius: 25px;
+    
+    background-color: transparent;
+    
+    outline: 0;
+    
+    transition: 0.5s;
+    
+    &:hover {
+        border-color: $hover-nav-text;
+    }
+      
+    &:focus {
+        border-color: $active-nav-text;
+        box-shadow: inset -2px -2px 5px $hover-nav-text;
+    }
+  }
+
+  &__submit-input {
+    font-size: 20px;
+    color: $input-submit-text;
+    margin: 0 auto;
+    
+    background: $input-submit-background;
+    border: 3px solid $input-submit-background;
+    border-radius: 10px;
+    padding: 10px 20px;
+
+    transition: 0.5s;
+
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $input-submit-hover-background;
+      background-color: $input-submit-hover-background;
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+      background-color: #e0e0e0;
+      border-color: #d6cccc;
+      color: #bbbaba;
+
+      &:hover {
+        background-color: #e0e0e0;
+        border-color: #d6cccc;
+        color: #bbbaba;
+      }
+    }
+  }
+}
+
+.switcher-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  .label{
+    order: 1;
+  }
+
+  &__switcher {
+    display: none;
+  }
+
+  &__inner-label {
+    position: relative;
+    display: block;
+    margin-right: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+  }
+
+  &__inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: 0.3s ease-in;
+    &:before,
+    &:after {
+      display: block;
+      float: left;
+      width: 50%;
+      height: 34px;
+      padding: 0;
+      line-height: 34px;
+      font-size: 14px;
+      color: $switcher-text;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    &:before {
+      content: attr(data-firstoptionlabel);
+      text-transform: uppercase;
+      padding-left: 10px;
+      background-color: $switcher-default-color;
+      color: $switcher-text;
+    }
+
+    &:after {
+      content: attr(data-secondoptionlabel);
+      text-transform: uppercase;
+      padding-right: 10px;
+      background-color: $switcher-color;
+      color: $switcher-text;
+      text-align: right;
+    }
+
+    &--selected {
+      &:after {
+        background-color: $switcher-no;
+      }
   
-  &:focus {
-      border-color: $active-nav-text;
-      box-shadow: inset -2px -2px 5px $hover-nav-text;
+      &:before {
+        background-color: $switcher-yes;
+      }
+    }
+  }
+
+  &__tumbler {
+    display: block;
+    width: 24px;
+    margin: 5px;
+    background: $switcher-text;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s ease-in;
+  }
+
+  &__switcher:checked + &__inner-label {
+    .switcher-wrapper__inner {
+      margin-left: 0;
+    }
+    .switcher-wrapper__tumbler {
+      left: calc(100% - 34px);
+    }
   }
 }

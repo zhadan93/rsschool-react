@@ -2,11 +2,24 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { NAV_PATHS } from '../../constants';
-
 import './Header.scss';
 
 const Header = (): JSX.Element => {
+  const NAV_PATHS = {
+    home: {
+      name: 'Home',
+      path: '/',
+    },
+    about: {
+      name: 'About',
+      path: 'about',
+    },
+    form: {
+      name: 'Create Card',
+      path: 'create-card',
+    },
+  };
+
   const setLinkClassName = (isActive: boolean) =>
     classNames('nav__link', { 'nav__link--active': isActive });
 

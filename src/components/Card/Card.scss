@@ -8,6 +8,7 @@
   justify-content: center;
   width: 903px;
   height: 477px;
+  overflow: hidden;
 
   border-radius: 20px;
   overflow-x: hidden;
@@ -15,13 +16,11 @@
   cursor: pointer;
 
   @include desktop-highest {
-    min-width: 564px;
     width: 47vw;
     height: 24.8vw;
   }
 
   @include desktop-bottom {
-    min-width: 0;
     width: 807px;
     height: 413px;
   }
@@ -36,7 +35,7 @@
   }
 
   &__img {
-    height: inherit;
+    height: auto;
     width: 100%;
 
     border-radius: 20px;
@@ -155,6 +154,7 @@
   &__characteristics {
     position: absolute;
     top: 0;
+    right: 0;
     right: -35%;
     display: flex;
     flex-direction: column;
@@ -190,33 +190,32 @@
 
   &__characteristic {
     display: flex;
+    align-items: baseline;
     width: 100%;
-    justify-content: space-between;
-    text-align: right;
+
+    &::before {
+      content: '';
+      border-bottom: 2px dotted $characteristics-text;
+      flex-grow: 1;
+      order: 1;
+      margin: 0 0.3px;
+
+      @include desktop-middle {
+        border-bottom-width: 1px;
+      }
+
+      @include desktop-bottom {
+        border-bottom-width: 2px;
+      }
+
+      @include tablet-middle {
+        border-bottom-width: 1px;
+      }
+     }
   }
 
-  &__dotted-line {
-    align-self: baseline;
-    display: block;
-    flex-grow: 1;
-    margin-top: 25px;
-    border-bottom: 2px dotted $characteristics-text;
-
-    @include desktop-highest {
-      margin-top: 1.3vw;
-    }
-  
-    @include desktop-bottom {
-      margin-top: 25px;
-    }
-  
-    @include tablet-middle {
-      margin-top: 2.2vw;
-      border-bottom: 1px dotted $characteristics-text;
-    }
-  
-    @include mobile-middle {
-      margin-top: 10px;
-    }
+  &__characteristic-value {
+    order: 3;
+    text-align: right;
   }
 }

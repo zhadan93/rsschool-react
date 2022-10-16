@@ -23,6 +23,20 @@ $card-characteristics-background: rgba(211, 190, 255, 0.8);
 $favorite: #fff;
 $active-favorite: #9370db;
 
+
+$form-background: rgba(211, 190, 255, 0.8);
+
+$switcher-color: #ff8df7;
+$switcher-default-color: #3a51ff;
+$switcher-text: #fff;
+$switcher-no: #e0e0e0;
+$switcher-yes: #9370db;
+
+
+$input-submit-text: #fff; 
+$input-submit-background: #9370db; 
+$input-submit-hover-background: #6d36dd; 
+
 /* Break points */
 $desktop-highest: 1920px;
 $desktop-middle: 1400px;
@@ -30,5 +44,6 @@ $desktop-bottom: 1200px;
 
 $tablet-middle: 860px;
 $tablet-lower: 767px;
+$tablet-lowest: 640px;
 
 $mobile-middle: 480px;

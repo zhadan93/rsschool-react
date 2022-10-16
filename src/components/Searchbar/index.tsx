@@ -30,8 +30,8 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
     localStorage.setItem(localStorageSearchbarKey, this.state.value);
   }
 
-  handleChange(value: string) {
-    this.setState({ value });
+  handleChange(value: string | boolean) {
+    typeof value === 'string' && this.setState({ value });
   }
 
   render(): JSX.Element {
@@ -41,7 +41,7 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
           className={classNames('searchbar__input', this.props.className)}
           placeholder="Search..."
           type="search"
-          searchValue={this.state.value}
+          value={this.state.value}
           onValueChange={this.handleChange}
         />
         <Icons id="magnifier" className="searchbar__magnifier-icon" />

@@ -5,13 +5,13 @@ export const CONTACTS_BASE_URLS = {
   telegram: 'https://t.me/',
 };
 
-export const NAV_PATHS = {
-  home: {
-    name: 'Home',
-    path: '/',
-  },
-  about: {
-    name: 'About',
-    path: 'about',
-  },
-};
+export const COUNTRIES = [
+  'Russian',
+  'Belarus',
+  'Uzbekistan',
+  'Armenia',
+  'Turkey',
+  'Georgia',
+  'Kazakhstan',
+  'China',
+];
