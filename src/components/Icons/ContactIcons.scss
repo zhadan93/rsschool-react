@@ -1,17 +1,15 @@
 @import '../../styles/constants';
 
-.favorite-icon {
-  fill: $favorite;
+.contact-icon {
+  fill: $contacts-icon;
+
+  border-radius: 0.3rem;
+
+  cursor: pointer;
 
   transition: 0.5s;
 
   &:hover {
     fill: $hover-contacts-icon;
   }
-}
-
-.magnifier-icon {
-  fill: $favorite;
-
-  transition: 0.5s;
 }

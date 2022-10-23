@@ -1,4 +1,4 @@
-import React, { Component, forwardRef } from 'react';
+import React, { Component, forwardRef, ChangeEvent } from 'react';
 import classNames from 'classnames';
 
 import { InputProps } from 'types/types';
@@ -10,12 +10,9 @@ class Input extends Component<InputProps> {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { onValueChange } = this.props;
-    const { value, checked, type } = e.target;
-    const changeValue = type === 'checkbox' ? checked : value;
-
-    onValueChange && onValueChange(changeValue);
+    onValueChange && onValueChange(e);
   }
 
   render(): JSX.Element {
@@ -36,49 +33,50 @@ class Input extends Component<InputProps> {
     const attr: Partial<InputProps> = { ...otherAttrs };
     delete attr.onValueChange;
 
-    let defaultClassName = 'input-wrapper__input';
-    switch (type) {
-      case 'search':
-        defaultClassName = 'input-wrapper__search-input';
-        break;
-      case 'checkbox':
-        defaultClassName = isSwitch
-          ? 'switcher-wrapper__switcher'
-          : 'input-wrapper__checkbox-input';
-        break;
-      case 'file':
-        defaultClassName = 'input-wrapper__file-input';
-        break;
-      case 'submit':
-        defaultClassName = 'input-wrapper__submit-input';
-        break;
-    }
-
     return (
-      <div className={classNames({ 'input-wrapper': !isSwitch, 'switcher-wrapper': isSwitch })}>
-        <label className="label" htmlFor={id}>
-          {label}
-        </label>
+      <div
+        className={classNames('input-wrapper', {
+          'input-wrapper--checkbox': type === 'checkbox',
+          'input-wrapper--switcher': isSwitch,
+        })}
+      >
+        {label && (
+          <label className="label" htmlFor={id}>
+            {label}
+          </label>
+        )}
         <input
           id={id}
-          className={classNames(defaultClassName, className, {
-            'input-wrapper__submit-input--disabled': attr.disabled,
-          })}
+          className={classNames(
+            'input-wrapper__input',
+            {
+              'input-wrapper__input--switcher': type === 'checkbox' && isSwitch,
+              'input-wrapper__input--checkbox': type === 'checkbox' && !isSwitch,
+              'input-wrapper__input--file': type === 'file',
+              'input-wrapper__input--submit': type === 'submit',
+              'input-wrapper__input--disabled': attr.disabled,
+            },
+            className
+          )}
           onChange={this.handleChange}
           type={type}
           ref={inputRef}
           {...attr}
         />
         {isSwitch && (
-          <label className="switcher-wrapper__inner-label" htmlFor={id}>
+          <label className="input-wrapper__switcher-label" htmlFor={id}>
             <span
-              className={classNames('switcher-wrapper__inner', {
-                'switcher-wrapper__inner--selected': !firstOptionLabel,
-              })}
+              className={classNames(
+                'input-wrapper__switcher-label-inner',
+                {
+                  'input-wrapper__switcher-label-inner--selected': !firstOptionLabel,
+                },
+                className
+              )}
               data-firstoptionlabel={firstOptionLabel}
               data-secondoptionlabel={secondOptionLabel}
             />
-            <span className={'switcher-wrapper__tumbler'} />
+            <span className={'input-wrapper__switcher-label-tumbler'} />
           </label>
         )}
         {error && <span className="error">{error}</span>}

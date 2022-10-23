@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 import './Button.scss';
 
-type ButtonProps = {
-  className?: string;
+interface ButtonProps
+  extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   onButtonClick?: () => void;
-  children: string | JSX.Element;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-};
+}
 
 const Button = (props: ButtonProps) => {
-  const { onButtonClick, children, className, type = 'button', ...attr } = props;
+  const { onButtonClick, children, className, ...attr } = props;
 
   return (
-    <button className={classNames('btn', className)} onClick={onButtonClick} type={type} {...attr}>
+    <button className={classNames('btn', className)} onClick={onButtonClick} {...attr}>
       {children}
     </button>
   );

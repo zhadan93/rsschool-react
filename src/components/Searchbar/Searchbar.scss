@@ -19,6 +19,10 @@
   &__input {
     padding-left: 45px;
 
+    font-size: 23px;
+    
+    border-color: $nav-text;
+
     @include tablet-lower {
       padding: 1.3vw 2.2vw;
       padding-left: 5.8vw;
@@ -33,7 +37,14 @@
       font-size: 10px;
     }
     
+    &:hover {
+      border-color: $hover-nav-text;
+    }
+  
     &:focus {
+      border-color: $active-nav-text;
+      box-shadow: inset -2px -2px 5px $hover-nav-text;
+
       @include mobile-middle {
         box-shadow: inset -1px -1px 4px $hover-nav-text;;
       }

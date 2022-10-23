@@ -1,0 +1,70 @@
+@import '../../styles/constants';
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+
+  &__select {
+    width: 220px;
+    padding: 10px 17px;
+  
+    color: $input-text;
+    font-size: 20px;
+  
+    border: 2px solid $input-border;
+    border-radius: 25px;
+  
+    background-color: transparent;
+  
+    outline: 0;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover {
+      border-color: $input-active-border;
+    }
+  
+    &:focus {
+      border-color: $input-active-border;
+      box-shadow: inset -2px -2px 5px $input-hover-border;
+    }
+  }
+
+  &__select.not-valid {
+    color: $error;
+    border-color: $error;
+
+    &:hover {
+      border-color: $hover-error;
+    }
+
+    &:focus {
+      border-color: $hover-error;
+      box-shadow: inset -2px -2px 5px $error;
+    }
+  }
+
+  &__select.not-valid ~ .error{
+    display: block;
+    opacity: 1;
+  }
+
+  &__option {
+    color: $input-active-border;
+  }
+
+  .error {
+    display: none;
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+
+    font-size: 15px;
+    color: $error;
+    opacity: 0;
+
+    transition: 0.5s;
+  }
+}

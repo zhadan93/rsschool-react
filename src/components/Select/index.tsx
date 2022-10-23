@@ -1,16 +1,26 @@
-import React, { Component, forwardRef, ForwardedRef } from 'react';
+import React, { Component, forwardRef, ForwardedRef, ChangeEvent } from 'react';
 import classNames from 'classnames';
+
+import './Select.scss';
+
+interface Option {
+  inner: string;
+  value?: string;
+  hidden?: boolean;
+  selected?: boolean;
+  disabled?: boolean;
+}
 
 type SelectProps = {
   id: string;
-  options: string[];
-  error?: string;
+  options: Option[];
   label?: string;
   className?: string;
   selectRef?: ForwardedRef<HTMLSelectElement>;
   value?: string;
   defaultValue?: string;
-  onValueChange?: (value: string) => void;
+  onValueChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
+  error?: string;
 };
 
 class Select extends Component<SelectProps> {
@@ -19,13 +29,13 @@ class Select extends Component<SelectProps> {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  handleChange(e: ChangeEvent<HTMLSelectElement>) {
     const { onValueChange } = this.props;
-    onValueChange && onValueChange(e.target.value);
+    onValueChange && onValueChange(e);
   }
 
   render(): JSX.Element {
-    const { id, options, error, label, className, defaultValue, selectRef } = this.props;
+    const { id, options, label, className, defaultValue, selectRef, error } = this.props;
     return (
       <div className="select-wrapper">
         {label && (
@@ -38,11 +48,16 @@ class Select extends Component<SelectProps> {
           className={classNames('select-wrapper__select', className)}
           ref={selectRef}
           onChange={this.handleChange}
+          defaultValue={defaultValue}
         >
-          {defaultValue && <option>{defaultValue}</option>}
-          {options.map((option) => (
-            <option key={option} className="select-wrapper__option">
-              {option}
+          {options.map(({ inner, value, ...otherAttrs }) => (
+            <option
+              key={inner || value}
+              className="select-wrapper__option"
+              value={inner || value}
+              {...otherAttrs}
+            >
+              {inner}
             </option>
           ))}
         </select>

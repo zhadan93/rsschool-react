@@ -16,6 +16,7 @@ describe('Searchbar component', () => {
 
   test('Save input value during Searchbar component’s unmount', async () => {
     const store = localStorageMock();
+
     const { setItem } = store;
 
     const searchKey = 'cardsSearchBar';
@@ -32,6 +33,7 @@ describe('Searchbar component', () => {
 
   test('Save input value during Searchbar component’s unmount in localStorage', async () => {
     const store = localStorageMock();
+
     const { getItem, setItem } = store;
 
     const searchKey = 'cardsSearchBar';
@@ -46,6 +48,7 @@ describe('Searchbar component', () => {
 
     render(<Searchbar />);
     expect(getItem).toHaveBeenCalledTimes(2);
+
     expect(screen.getByDisplayValue(searchValue)).toBeInTheDocument();
   });
 });

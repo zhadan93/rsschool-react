@@ -6,138 +6,195 @@
 }
 
 .input-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
+  row-gap: 4px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  &--checkbox {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 8px;
+
+    .label {
+      display: flex;
+      flex-wrap: wrap;
+      order: 1;
+    }
+
+    .error {
+      order: 2;
+    }
+  }
+
+  &--switcher {
+    margin-top: 10px;
+  }
 
   &__input {
     display: block;
     width: 100%;
     padding: 10px 17px;
-    
-    color: $main-text;
-    font-size: 23px;
-      
-    border: 2px solid $nav-text;
-    border-radius: 25px;
-    
-    background-color: transparent;
-    
-    outline: 0;
-    
-    transition: 0.5s;
-    
-    &:hover {
-        border-color: $hover-nav-text;
-    }
-      
-    &:focus {
-        border-color: $active-nav-text;
-        box-shadow: inset -2px -2px 5px $hover-nav-text;
-    }
-  }
-
-  &__search-input {
-    display: block;
-    width: 100%;
-    padding: 10px 17px;
-    
-    color: $main-text;
-    font-size: 23px;
-      
-    border: 2px solid $nav-text;
-    border-radius: 25px;
-    
-    background-color: transparent;
-    
-    outline: 0;
-    
-    transition: 0.5s;
-    
-    &:hover {
-        border-color: $hover-nav-text;
-    }
-      
-    &:focus {
-        border-color: $active-nav-text;
-        box-shadow: inset -2px -2px 5px $hover-nav-text;
-    }
-  }
-
-  &__submit-input {
+  
+    color: $input-text;
     font-size: 20px;
-    color: $input-submit-text;
-    margin: 0 auto;
-    
-    background: $input-submit-background;
-    border: 3px solid $input-submit-background;
-    border-radius: 10px;
-    padding: 10px 20px;
-
+  
+    border: 2px solid $input-border;
+    border-radius: 25px;
+  
+    background-color: transparent;
+  
+    outline: 0;
+  
     transition: 0.5s;
-
-    outline: none;
-    cursor: pointer;
-
+  
     &:hover {
+      border-color: $input-active-border;
+    }
+  
+    &:focus {
+      border-color: $input-active-border;
+      box-shadow: inset -2px -2px 5px $input-hover-border;
+    }
+
+    &--file {
+      border-radius: 40px;
+    }
+
+    &--file::-webkit-file-upload-button {
+      padding: 10px 20px;
+
+      color: $input-submit-text;
+
+      background: $input-submit-background;
+      border: 3px solid $input-submit-background;
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      transition: 0.5s;
+
+      &:hover {
+        border-color: $input-submit-hover-background;
+        background-color: $input-submit-hover-background;
+      }
+    }
+
+    &--file:hover::-webkit-file-upload-button {
       border-color: $input-submit-hover-background;
       background-color: $input-submit-hover-background;
     }
 
+    &--checkbox {
+      width: auto;
+    }
+
+    &--switcher {
+      display: none;
+    }
+
+    &--switcher:checked + .input-wrapper__switcher-label {
+      .input-wrapper__switcher-label-inner {
+        margin-left: 0;
+      }
+      .input-wrapper__switcher-label-tumbler {
+        left: calc(100% - 34px);
+      }
+    }
+
+    &--submit {
+      width: auto;
+      margin: 0 auto;
+  
+      background: $input-submit-background;
+      border: 3px solid $input-submit-background;
+      border-radius: 10px;
+      padding: 10px 20px;
+  
+      transition: 0.5s;
+  
+      cursor: pointer;
+  
+      &:hover {
+        border-color: $input-submit-hover-background;
+        background-color: $input-submit-hover-background;
+      }
+    }
+
     &--disabled {
       cursor: not-allowed;
-      background-color: #e0e0e0;
-      border-color: #d6cccc;
-      color: #bbbaba;
-
+      background-color: $disabled-background;
+      border-color: $disabled-border;
+      color: $disabled-text;
+  
       &:hover {
-        background-color: #e0e0e0;
-        border-color: #d6cccc;
-        color: #bbbaba;
+        background-color: $disabled-background;
+        border-color: $disabled-border;
+        color: $disabled-text;
       }
     }
   }
-}
 
-.switcher-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  &__input.not-valid {
+    color: $error;
+    border-color: $error;
 
-  .label{
-    order: 1;
+    &:hover {
+      border-color: $hover-error;
+    }
+
+    &:focus {
+      border-color: $hover-error;
+      box-shadow: inset -2px -2px 5px $error;
+    }
   }
 
-  &__switcher {
-    display: none;
+  &__input--file.not-valid::-webkit-file-upload-button {
+    background: $error;
+    border-color: $error;
+
+    &:hover {
+      border-color: $hover-error;
+      background-color: $hover-error;
+    }
   }
 
-  &__inner-label {
+  &__input.not-valid ~ .error{
+    display: block;
+    opacity: 1;
+  }
+
+  &__switcher-label {
     position: relative;
     display: block;
-    margin-right: 10px;
     overflow: hidden;
-    cursor: pointer;
+
     border: none;
     border-radius: 20px;
+
+    cursor: pointer;
   }
 
-  &__inner {
+  &__switcher-label-inner {
     display: block;
     width: 200%;
     margin-left: -100%;
+
+    font-size: 14px;
+
     transition: 0.3s ease-in;
     &:before,
     &:after {
-      display: block;
+      display: flex;
+      align-items: center;
       float: left;
       width: 50%;
       height: 34px;
       padding: 0;
-      line-height: 34px;
-      font-size: 14px;
       color: $switcher-text;
       font-weight: bold;
       box-sizing: border-box;
@@ -157,7 +214,7 @@
       padding-right: 10px;
       background-color: $switcher-color;
       color: $switcher-text;
-      text-align: right;
+      justify-content: right;
     }
 
     &--selected {
@@ -170,8 +227,8 @@
       }
     }
   }
-
-  &__tumbler {
+  
+  &__switcher-label-tumbler {
     display: block;
     width: 24px;
     margin: 5px;
@@ -185,12 +242,16 @@
     transition: 0.3s ease-in;
   }
 
-  &__switcher:checked + &__inner-label {
-    .switcher-wrapper__inner {
-      margin-left: 0;
-    }
-    .switcher-wrapper__tumbler {
-      left: calc(100% - 34px);
-    }
+  .error {
+    display: none;
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+
+    font-size: 15px;
+    color: $error;
+    opacity: 0;
+
+    transition: 0.5s;
   }
 }

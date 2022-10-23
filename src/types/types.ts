@@ -1,4 +1,4 @@
-import { ForwardedRef } from 'react';
+import { ForwardedRef, ChangeEvent, DetailedHTMLProps, HTMLAttributes } from 'react';
 
 export interface CardDetails {
   id: number;
@@ -18,12 +18,25 @@ export type InputProps = {
   placeholder?: string;
   type?: string;
   value?: string;
-  onValueChange?: (value: string | boolean) => void;
-  error?: string;
+  onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   required?: boolean;
   inputRef?: ForwardedRef<HTMLInputElement>;
   accept?: string;
   optionLabels?: string[];
   isSwitch?: boolean;
+  error?: string;
+  name?: string;
 };
+
+export interface FormCardDetails {
+  id: number;
+  firstName: string;
+  lastName: string;
+  birthday: string;
+  sex: string;
+  country: string;
+  avatar: string;
+}
+
+export type CardFormDetails = Omit<FormCardDetails, 'id'>;

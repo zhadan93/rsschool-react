@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import Input from 'components/Input';
-import Icons from 'components/Icons';
+import MagnifierIcon from 'components/Icons/MagnifierIcon';
 
 import './Searchbar.scss';
 
@@ -30,7 +30,8 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
     localStorage.setItem(localStorageSearchbarKey, this.state.value);
   }
 
-  handleChange(value: string | boolean) {
+  handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const { value } = e.target;
     typeof value === 'string' && this.setState({ value });
   }
 
@@ -44,7 +45,7 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
           value={this.state.value}
           onValueChange={this.handleChange}
         />
-        <Icons id="magnifier" className="searchbar__magnifier-icon" />
+        <MagnifierIcon className="searchbar__magnifier-icon" />
       </div>
     );
   }

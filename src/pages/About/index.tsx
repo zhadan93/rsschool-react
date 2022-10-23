@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icons from 'components/Icons';
+import CONTACT_ICONS from 'components/Icons/ContactIcons';
 import { CONTACTS_BASE_URLS, CONTACTS_NAME } from '../../constants';
 import evgeniia from '../../assets/img/zhadan.jpg';
 
@@ -19,7 +19,7 @@ const About = (): JSX.Element => {
           <section className="contacts">
             {Object.entries(CONTACTS_BASE_URLS).map(([key, value]) => (
               <a key={key} href={`${value}${CONTACTS_NAME}`} rel="noreferrer" target="_blank">
-                <Icons id={key} className="about__contact-icon" />
+                {CONTACT_ICONS[key]('about__contact-icon')}
               </a>
             ))}
           </section>

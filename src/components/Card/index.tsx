@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import Icons from 'components/Icons';
+import FavoriteIcon from 'components/Icons/FavoriteIcon';
 
 import './Card.scss';
 
 import { CardDetails } from '../../types/types';
+
+const MEASURE_UNITS: Record<string, string> = {
+  cost: '₽',
+  volume: 'ml',
+};
 
 type CardProps = {
   cardData: CardDetails;
@@ -45,26 +50,19 @@ class Card extends Component<CardProps, CardState> {
         <div className="card__characteristics">
           <h3 className="card__characteristic-title">Characteristics</h3>
           {Array.from(mapAttributes).map(([characteristic, value]) => {
-            let characteristicValue = value;
-            switch (characteristic) {
-              case 'cost':
-                characteristicValue = `${value}₽`;
-                break;
-              case 'volume':
-                characteristicValue = `${value}ml`;
-                break;
-            }
             return (
               <div key={characteristic} className="card__characteristic">
                 <span className="card__characteristic-key">{characteristic}</span>
-                <span className="card__characteristic-value">{characteristicValue}</span>
+                <span className="card__characteristic-value">
+                  {value}
+                  {MEASURE_UNITS[characteristic]}
+                </span>
               </div>
             );
           })}
         </div>
         <button className="card__favorite" onClick={this.handleFavoriteClick}>
-          <Icons
-            id="favorite"
+          <FavoriteIcon
             className={classNames('card__favorite-icon', { 'favorite-icon--active': favorite })}
           />
         </button>
