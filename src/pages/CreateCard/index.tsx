@@ -24,7 +24,7 @@ class CreateCard extends Component<CreateCardProps, CreateCardState> {
 
   render() {
     return (
-      <div data-testid="createCard" className="create-card">
+      <div data-testid="create-card" className="create-card">
         <div className="container">
           <CardForm onValueSubmit={this.handleSubmit} />
           <FormCardList formCardsData={this.state.formCardsData} />

@@ -14,7 +14,7 @@ const FormCard = (props: FormCardProps) => {
   mapAttributes.delete('id');
 
   return (
-    <div className="form-card">
+    <div data-testid="form-card" className="form-card">
       <div className="form-card__personal">
         <img src={avatar} alt="avatar" className="form-card__avatar" />
         <span className="form-card__name">

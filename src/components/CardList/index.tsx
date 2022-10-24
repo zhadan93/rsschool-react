@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './CardList.scss';
 
 import Card from 'components/Card';
-import { CardDetails } from '../../types/types';
+import { CardDetails, FormCardDetails } from '../../types/types';
 
 interface CardListProps {
   cardsData: CardDetails[];

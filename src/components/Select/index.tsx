@@ -44,6 +44,7 @@ class Select extends Component<SelectProps> {
           </label>
         )}
         <select
+          data-testid="select"
           id={id}
           className={classNames('select-wrapper__select', className)}
           ref={selectRef}

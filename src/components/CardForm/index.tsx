@@ -64,7 +64,17 @@ class CardForm extends Component<CardFormProps> {
     }
 
     const isValidForm = this.isValidForm();
-    (isValidForm || (isValidForm && id === 'sex')) && this.toggleSubmitBtnState(false);
+    isValidForm && this.toggleSubmitBtnState(false);
+  }
+
+  setDefaultValue(key: string, el: HTMLInputElement | HTMLSelectElement) {
+    const defaultValue = defaultFormElementValues[key];
+
+    if (typeof defaultValue === 'string') {
+      el.value = defaultValue;
+    } else if (typeof defaultValue === 'boolean' && el instanceof HTMLInputElement) {
+      el.checked = defaultValue;
+    }
   }
 
   defineNotValidField(key: string, el: HTMLInputElement | HTMLSelectElement) {
@@ -72,15 +82,6 @@ class CardForm extends Component<CardFormProps> {
     this.errors[key] = true;
 
     this.setDefaultValue(key, el);
-  }
-
-  setDefaultValue(key: string, el: HTMLInputElement | HTMLSelectElement) {
-    const defaultValue = defaultFormElementValues[key];
-    if (typeof defaultValue === 'string') {
-      el.value = defaultValue;
-    } else if (typeof defaultValue === 'boolean' && el instanceof HTMLInputElement) {
-      el.checked = defaultValue;
-    }
   }
 
   resetForm() {
@@ -128,7 +129,7 @@ class CardForm extends Component<CardFormProps> {
       const isValidCountry = country !== defaultFormElementValues.country;
       !isValidCountry && this.defineNotValidField('country', countryEl);
 
-      const avatar = avatarEl.value;
+      const avatar = avatarEl.files?.[0];
       const isValidAvatar = isValidUploadImg(avatar);
       !isValidAvatar && this.defineNotValidField('avatar', avatarEl);
 
@@ -138,12 +139,9 @@ class CardForm extends Component<CardFormProps> {
       const sex = sexEl.checked;
       const [male, female] = sexValues;
 
-      if (this.isValidForm()) {
-        const file = avatarEl.files?.[0];
+      if (this.isValidForm() && avatar) {
         let url = '';
-        if (file) {
-          url = URL.createObjectURL(file);
-        }
+        url = URL.createObjectURL(avatar);
 
         this.props.onValueSubmit({
           firstName,
@@ -167,8 +165,13 @@ class CardForm extends Component<CardFormProps> {
     if (typeof country === 'string') {
       return (
         <>
-          <form className="card-form main__card-form" onSubmit={this.handleSubmit}>
+          <form
+            data-testid="card-form"
+            className="card-form main__card-form"
+            onSubmit={this.handleSubmit}
+          >
             <InputWithRef
+              data-testid="first-name"
               className="card-form__input"
               id="firstName"
               label="First Name"
@@ -177,6 +180,7 @@ class CardForm extends Component<CardFormProps> {
               error={'Only Alphabets and more then one characters'}
             />
             <InputWithRef
+              data-testid="last-name"
               className="card-form__input"
               id="lastName"
               label="Last Name"
@@ -185,6 +189,7 @@ class CardForm extends Component<CardFormProps> {
               error={'Only Alphabets and more then one characters'}
             />
             <InputWithRef
+              data-testid="birthday"
               className="card-form__input"
               id="birthday"
               type="date"
@@ -194,6 +199,7 @@ class CardForm extends Component<CardFormProps> {
               error={'You need to choose date'}
             />
             <InputWithRef
+              data-testid="sex"
               className="card-form__switcher"
               id="sex"
               label="Sex"
@@ -214,6 +220,7 @@ class CardForm extends Component<CardFormProps> {
               error={'You need to choose country'}
             />
             <InputWithRef
+              data-testid="avatar"
               className="card-form__file"
               id="avatar"
               type="file"
@@ -223,6 +230,7 @@ class CardForm extends Component<CardFormProps> {
               error={'You need to upload image'}
             />
             <InputWithRef
+              data-testid="agrees"
               id="agrees"
               label="I consent to my personal data"
               type="checkbox"
@@ -231,6 +239,7 @@ class CardForm extends Component<CardFormProps> {
               error={'You need to agree'}
             />
             <InputWithRef
+              data-testid="submit"
               className="card-form__submit"
               type="submit"
               value="Create Card"
