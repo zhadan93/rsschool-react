@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -199,8 +199,11 @@ describe('CardForm component', () => {
     await setUpFileInput(avatarTestId, file);
     await setUpCheckboxInput(agreesTestId);
 
-    await userEvent.click(screen.getByTestId('submit'));
-    expect(addCardData).toBeCalled();
+    waitFor(() => {
+      jest.spyOn(Element.prototype, 'getAnimations').mockImplementation(() => [new Animation()]);
+      userEvent.click(screen.getByTestId('submit'));
+      expect(addCardData).toBeCalled();
+    });
   });
 
   test('check data submission when not all form fields are valid', async () => {

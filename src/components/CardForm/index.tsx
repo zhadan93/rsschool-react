@@ -2,6 +2,8 @@ import React, { Component, createRef, ChangeEvent } from 'react';
 
 import { InputWithRef } from 'components/Input';
 import { SelectWithRef } from 'components/Select';
+import { NotificationWithRef } from 'components/Notification';
+
 import { COUNTRIES } from '../../constants';
 import { CardFormDetails } from 'types/types';
 import './CardForm.scss';
@@ -35,6 +37,7 @@ class CardForm extends Component<CardFormProps> {
   private submit = createRef<HTMLInputElement>();
   private formElements: Record<string, HTMLInputElement | HTMLSelectElement> = {};
   private errors: Record<string, boolean> = {};
+  private notification = createRef<HTMLDivElement>();
 
   constructor(props: CardFormProps) {
     super(props);
@@ -139,6 +142,8 @@ class CardForm extends Component<CardFormProps> {
       const sex = sexEl.checked;
       const [male, female] = sexValues;
 
+      this.toggleSubmitBtnState(true);
+
       if (this.isValidForm() && avatar) {
         let url = '';
         url = URL.createObjectURL(avatar);
@@ -153,10 +158,13 @@ class CardForm extends Component<CardFormProps> {
         });
 
         this.resetForm();
+
+        const notificationEl = this.notification.current;
+        notificationEl?.classList.add('valid');
+        await notificationEl?.getAnimations()?.[0].finished;
+        notificationEl?.classList.remove('valid');
       }
     }
-
-    this.toggleSubmitBtnState(true);
   }
 
   render() {
@@ -247,6 +255,11 @@ class CardForm extends Component<CardFormProps> {
               disabled
             />
           </form>
+          <NotificationWithRef
+            ref={this.notification}
+            type="success"
+            message={'Data saved successfully!'}
+          />
         </>
       );
     }

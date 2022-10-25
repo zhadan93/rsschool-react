@@ -48,6 +48,11 @@ $disabled-border: #d6cccc;
 $disabled-background: #e0e0e0;
 $disabled-text: #bbbaba;
 
+$notification-background: rgba(224, 224, 224, 0.9);
+$notification-success-text: #6d36dd;
+$notification-indicator: rgba(255, 255, 255, 0.9);
+$notification-success-indicator: rgba(110, 54, 222, 0.9);
+
 /* Break points */
 $desktop-highest: 1920px;
 $desktop-middle: 1400px;
@@ -57,4 +62,5 @@ $tablet-middle: 860px;
 $tablet-lower: 767px;
 $tablet-lowest: 640px;
 
+$mobile-highest:534px;
 $mobile-middle: 480px;

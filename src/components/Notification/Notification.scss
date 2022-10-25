@@ -1,0 +1,165 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.notification {
+  position: fixed;
+  top: 96px;
+  right: -270px;
+  display: flex;
+  width: 260px;
+  align-items: center;
+  padding: 10px;
+  padding-left: 25px;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  background-color: $notification-background;
+  border-radius: 8px;
+
+  @include tablet-lowest {
+    right: -44%;
+    top: 15vw;
+    min-width: 195px;
+    width: 40.5%;
+    padding: 1.55vw;
+    padding-left: 3.9vw;
+    font-size: 2.65vw;
+  }
+
+  @include mobile-middle {
+    right: -205px;
+    top: 67px;
+    padding: 7.4px;
+    padding-left: 18.7px;
+    font-size: 12.7px;
+  }
+
+  &--success {
+    color: $notification-success-text;
+  }
+
+  &__indicate {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -30px;
+    margin-top: -25px;
+    width: 24px;
+    height: 24px;
+
+    @include tablet-lowest {
+      min-width: 20px;
+      min-height: 20px;
+      width: 3.75vw;
+      height: 3.75vw;
+      margin-left: -4.68vw;
+      margin-top: -3.9vw;
+    }
+  
+    @include mobile-middle {
+      margin-left: -22.5px;
+      margin-top: -18.7px;
+    }
+
+    &--success {
+      background-color: $notification-success-indicator;
+      border-radius: 5px;
+
+      &::before,
+      &::after {
+        position: absolute;
+        display: block;
+      
+        background-color: $notification-indicator;
+        content: "";
+      
+        border-radius: 3.44rem;
+      }
+        
+      &::before {
+        left: 25%;
+        top: 40%;
+        height: 0.5rem;
+        width: 0.22rem;
+      
+        transform: rotate(-45deg);
+
+        @include tablet-lowest {
+          min-height: 6.4px;
+          min-width: 2.66px;
+          width: 0.5vw;
+          height: 1.2vw;
+        }
+      }
+        
+      &::after {
+        height: 0.22rem;
+        width: 0.9rem;
+      
+        transform: translateX(16%) rotate(-45deg);
+
+        @include tablet-lowest {
+          min-height: 2.66px;
+          min-width: 11.3px;
+          width: 2.2vw;
+          height: 0.5vw;
+        }
+      }
+    }
+  }
+}
+
+.notification.valid {
+  animation: moveNotification 4s;
+
+  @keyframes moveNotification {
+    from {
+      right: -270px;
+    }
+    20% {
+      right: 5px;
+    }
+    80% {
+      right: 5px;
+    }
+    to {
+      right: -270px;
+    }
+  }
+
+  @include tablet-lowest {
+    @keyframes moveNotification {
+      from {
+        right: -44%;
+      }
+      20% {
+        right: 5px;
+      }
+      80% {
+        right: 5px;
+      }
+      to {
+        right: -44%;
+      }
+    }
+  }
+
+  @include mobile-middle {
+    @keyframes moveNotification{
+      from {
+        right: -205px;
+      }
+      20% {
+        right: 5px;
+      }
+      80% {
+        right: 5px;
+      }
+      to {
+        right: -205px;
+      }
+    }
+  }
+}

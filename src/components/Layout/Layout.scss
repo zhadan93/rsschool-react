@@ -9,6 +9,7 @@
 }
 
 .main {
+  position: relative;
   min-height: calc(100vh - 78px);
   padding-top: 20px;
   color: $main-text;
