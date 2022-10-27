@@ -1,4 +1,10 @@
-import React, { Component, forwardRef, ForwardedRef, ChangeEvent } from 'react';
+import React, {
+  Component,
+  forwardRef,
+  ForwardedRef,
+  ChangeEvent,
+  SelectHTMLAttributes,
+} from 'react';
 import classNames from 'classnames';
 
 import './Select.scss';
@@ -11,17 +17,12 @@ interface Option {
   disabled?: boolean;
 }
 
-type SelectProps = {
-  id: string;
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: Option[];
-  label?: string;
-  className?: string;
   selectRef?: ForwardedRef<HTMLSelectElement>;
-  value?: string;
-  defaultValue?: string;
   onValueChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
-  error?: string;
-};
+  error: JSX.Element;
+}
 
 class Select extends Component<SelectProps> {
   constructor(props: SelectProps) {
@@ -35,21 +36,18 @@ class Select extends Component<SelectProps> {
   }
 
   render(): JSX.Element {
-    const { id, options, label, className, defaultValue, selectRef, error } = this.props;
+    const { options, children, className, error, selectRef, ...otherAttr } = this.props;
+    delete otherAttr.onValueChange;
+
     return (
-      <div className="select-wrapper">
-        {label && (
-          <label className="label" htmlFor={id}>
-            {label}
-          </label>
-        )}
+      <label className="select-wrapper label">
+        {children}
         <select
           data-testid="select"
-          id={id}
           className={classNames('select-wrapper__select', className)}
           ref={selectRef}
           onChange={this.handleChange}
-          defaultValue={defaultValue}
+          {...otherAttr}
         >
           {options.map(({ inner, value, ...otherAttrs }) => (
             <option
@@ -62,8 +60,8 @@ class Select extends Component<SelectProps> {
             </option>
           ))}
         </select>
-        {error && <span className="error">{error}</span>}
-      </div>
+        {error}
+      </label>
     );
   }
 }

@@ -1,5 +1,6 @@
 @import '../../styles/constants';
 @import '../../styles/mixins';
+@import '../../styles/inputMixins';
 
 .searchbar {
   position: relative;
@@ -17,11 +18,9 @@
   }
 
   &__input {
-    padding-left: 45px;
+    @include input-style;
 
-    font-size: 23px;
-    
-    border-color: $nav-text;
+    padding-left: 45px;
 
     @include tablet-lower {
       padding: 1.3vw 2.2vw;

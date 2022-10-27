@@ -1,0 +1,50 @@
+@import '../../../styles/constants';
+@import '../../../styles/inputMixins';
+
+.upload-file-wrapper {
+  @include input-wrapper;
+
+  &__upload-file {
+    @include input-style;
+    border-radius: 40px;
+
+    &:hover::-webkit-file-upload-button {
+      border-color: $input-submit-hover-background;
+      background-color: $input-submit-hover-background;
+    }
+
+    &::-webkit-file-upload-button {
+      padding: 10px 20px;
+
+      color: $input-submit-text;
+
+      background: $input-submit-background;
+      border: 3px solid $input-submit-background;
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      transition: 0.5s;
+
+      &:hover {
+        border-color: $input-submit-hover-background;
+        background-color: $input-submit-hover-background;
+      }
+    }
+  }
+
+  &__upload-file.not-valid {
+    @include not-valid-input;
+
+    &:hover::-webkit-file-upload-button {
+      border-color: $hover-error;
+      background-color: $hover-error;
+    }
+
+  }
+
+  &__upload-file.not-valid::-webkit-file-upload-button {
+    background: $error;
+    border-color: $error;
+  }
+}

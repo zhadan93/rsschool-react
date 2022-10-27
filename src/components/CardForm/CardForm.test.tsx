@@ -14,7 +14,7 @@ const addCardDataMock = () => {
 
 describe('CardForm component', () => {
   const notValidClass = 'not-valid';
-  const disabledSubmitBtn = 'input-wrapper__input--disabled';
+  const disabledSubmitBtn = 'submit--disabled';
   const firstNameTestId = 'first-name';
   const lastNameTestId = 'last-name';
   const birthdayTestId = 'birthday';

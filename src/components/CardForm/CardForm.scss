@@ -4,7 +4,7 @@
 .card-form {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  gap: 18px;
   width: 500px;
   background-color: $form-background;
   margin: 0 auto;
@@ -12,14 +12,14 @@
   border-radius: 20px;
 
   @include tablet-lowest {
-    row-gap: 3.12vw;
+    gap: 2.8vw;
     min-width: 290px;
     width: 80%;
     padding: 15px;
   }
 
   @include mobile-middle {
-    row-gap: 14.9px;
+    gap: 13.4px;
     padding: 10px;
   }
 
@@ -33,16 +33,26 @@
     }
   }
 
-  .error {
+  &__error {
+    display: none;
+    position: absolute;
+    bottom: -19px;
+    opacity: 0;
+
     @include tablet-lowest {
-      bottom: -3.1vw;
+      bottom: -2.96vw;
       font-size: 2.34vw;
     }
 
     @include mobile-middle {
-      bottom: -14.9px;
+      bottom: -14.2px;
       font-size: 11.2px;
     }
+  }
+
+  .not-valid ~ &__error {
+    display: flex;
+    opacity: 1;
   }
 
   &__input,
@@ -70,13 +80,15 @@
   }
 
   &__submit {
+    margin: 0 auto;
+
     @include tablet-lowest {
       padding: 1.56vw 3.12vw;
       font-size: 3.1vw;
     }
 
     @include mobile-middle {
-      padding: 7.5px 10px;
+      padding: 7.5px 15px;
       font-size: 14px;
     }
   }
@@ -92,45 +104,40 @@
   }
 
   &__switcher {
+    margin-top: 10px;
+
     @include tablet-lowest {
-      font-size: 2.18vw;
+      margin-top: 1.55vw;
     }
 
     @include mobile-middle {
-      font-size: 10.4px;
+      margin-top: 7.4px;
     }
 
-    &:before,
-    &:after {
+    .switcher-wrapper__switcher {
       @include tablet-lowest {
+        width: 17.15vw;
         height: 5.3vw;
+        font-size: 2.18vw;
+      }
+
+      @include mobile-middle {
+        width: 82.5px;
+        height: 25.5px;
+        font-size: 10.4px;
+      }
+    }
+
+    .switcher-wrapper__tumbler {
+      @include tablet-lowest {
+        width: 3.75vw;
+        height: 3.75vw;
       }
   
       @include mobile-middle {
-        height: 25.5px;
+        width: 16px;
+        height: 16px;
       }
-    }
-  }
-
-  .input-wrapper__input--switcher:checked + .input-wrapper__switcher-label {
-    .input-wrapper__switcher-label-tumbler {
-      @include tablet-lowest {
-        left: calc(100% - 5.5vw);
-      }
-
-      @include mobile-middle {
-        left: calc(100% - 25px);
-      }
-    }
-  }
-
-  .input-wrapper__switcher-label-tumbler {
-    @include tablet-lowest {
-      width: 3.7vw;
-    }
-
-    @include mobile-middle {
-      width: 16px;
     }
   }
 }

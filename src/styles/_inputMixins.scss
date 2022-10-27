@@ -1,0 +1,59 @@
+@mixin checkbox-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  width: max-content;
+
+  font-size: 20px;
+}
+
+@mixin input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+
+  font-size: 20px;
+}
+
+@mixin input-style {
+  display: block;
+  width: 100%;
+  padding: 10px 17px;
+  
+  color: $input-text;
+  font-size: 20px;
+  
+  border: 2px solid $input-border;
+  border-radius: 25px;
+  
+  background-color: transparent;
+  
+  outline: 0;
+  
+  transition: 0.5s;
+  
+  &:hover {
+    border-color: $input-active-border;
+  }
+  
+  &:focus {
+    border-color: $input-active-border;
+    box-shadow: inset -2px -2px 5px $input-hover-border;
+  }
+}
+
+@mixin not-valid-input {
+  color: $error;
+  border-color: $error;
+
+  &:hover {
+    border-color: $hover-error;
+  }
+
+  &:focus {
+    border-color: $hover-error;
+    box-shadow: inset -2px -2px 5px $error;
+  }
+}

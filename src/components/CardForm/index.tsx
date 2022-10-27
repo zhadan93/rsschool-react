@@ -1,15 +1,21 @@
 import React, { Component, createRef, ChangeEvent } from 'react';
 
-import { InputWithRef } from 'components/Input';
+import { InputWithRef } from 'components/Inputs/Input';
 import { SelectWithRef } from 'components/Select';
 import { NotificationWithRef } from 'components/Notification';
+import { SwitcherWithRef } from 'components/Inputs/Switcher';
+import { SubmitBtnWithRef } from 'components/Inputs/SubmitBtn';
+import { UploadFileWithRef } from 'components/Inputs/UploadFile';
+import { DateWithRef } from 'components/Inputs/Date';
+import { CheckboxWithRef } from 'components/Inputs/Checkbox';
+import Error from 'components/Error';
 
 import { COUNTRIES } from '../../constants';
 import { CardFormDetails } from 'types/types';
 import './CardForm.scss';
 import { isValidName, isValidUploadImg } from 'helpers/validate';
 
-const disabledSubmitBtn = 'input-wrapper__input--disabled';
+const disabledSubmitBtn = 'submit--disabled';
 const sexValues = ['male', 'female'];
 const notValidClass = 'not-valid';
 
@@ -182,74 +188,83 @@ class CardForm extends Component<CardFormProps> {
               data-testid="first-name"
               className="card-form__input"
               id="firstName"
-              label="First Name"
               ref={this.firstName}
               onValueChange={this.handleChange}
-              error={'Only Alphabets and more then one characters'}
-            />
+              error={
+                <Error className="card-form__error">
+                  Only Alphabets and more then one characters
+                </Error>
+              }
+            >
+              First Name
+            </InputWithRef>
             <InputWithRef
               data-testid="last-name"
               className="card-form__input"
               id="lastName"
-              label="Last Name"
               ref={this.lastName}
               onValueChange={this.handleChange}
-              error={'Only Alphabets and more then one characters'}
-            />
-            <InputWithRef
+              error={
+                <Error className="card-form__error">
+                  Only Alphabets and more then one characters
+                </Error>
+              }
+            >
+              Last Name
+            </InputWithRef>
+            <DateWithRef
               data-testid="birthday"
               className="card-form__input"
               id="birthday"
-              type="date"
-              label="Birthday"
               ref={this.birthday}
               onValueChange={this.handleChange}
-              error={'You need to choose date'}
-            />
-            <InputWithRef
+              error={<Error className="card-form__error">You need to choose date</Error>}
+            >
+              Birthday
+            </DateWithRef>
+            <SwitcherWithRef
               data-testid="sex"
               className="card-form__switcher"
               id="sex"
-              label="Sex"
-              type="checkbox"
               ref={this.sex}
               onValueChange={this.handleChange}
               optionLabels={sexValues}
-              isSwitch={true}
-            />
+            >
+              Sex
+            </SwitcherWithRef>
             <SelectWithRef
               className="card-form__select"
               options={COUNTRIES}
               id="country"
-              label="Country"
               ref={this.country}
               defaultValue={country}
               onValueChange={this.handleChange}
-              error={'You need to choose country'}
-            />
-            <InputWithRef
+              error={<Error className="card-form__error">You need to choose country</Error>}
+            >
+              Country
+            </SelectWithRef>
+            <UploadFileWithRef
               data-testid="avatar"
               className="card-form__file"
               id="avatar"
-              type="file"
-              label="Upload Photo"
               ref={this.avatar}
               onValueChange={this.handleChange}
-              error={'You need to upload image'}
-            />
-            <InputWithRef
+              error={<Error className="card-form__error">You need to upload image</Error>}
+            >
+              Upload Photo
+            </UploadFileWithRef>
+            <CheckboxWithRef
               data-testid="agrees"
               id="agrees"
-              label="I consent to my personal data"
-              type="checkbox"
               ref={this.agrees}
               onValueChange={this.handleChange}
-              error={'You need to agree'}
-            />
-            <InputWithRef
+              error={<Error className="card-form__error">You need to agree</Error>}
+            >
+              I consent to my personal data
+            </CheckboxWithRef>
+            <SubmitBtnWithRef
               data-testid="submit"
               className="card-form__submit"
-              type="submit"
               value="Create Card"
               ref={this.submit}
               disabled

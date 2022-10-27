@@ -1,6 +1,6 @@
 import React, { Component, ChangeEvent } from 'react';
 import classNames from 'classnames';
-import Input from 'components/Input';
+
 import MagnifierIcon from 'components/Icons/MagnifierIcon';
 
 import './Searchbar.scss';
@@ -32,18 +32,18 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
 
   handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    typeof value === 'string' && this.setState({ value });
+    this.setState({ value });
   }
 
   render(): JSX.Element {
     return (
       <div className="searchbar">
-        <Input
+        <input
           className={classNames('searchbar__input', this.props.className)}
           placeholder="Search..."
           type="search"
           value={this.state.value}
-          onValueChange={this.handleChange}
+          onChange={this.handleChange}
         />
         <MagnifierIcon className="searchbar__magnifier-icon" />
       </div>
