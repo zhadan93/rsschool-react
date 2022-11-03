@@ -1,0 +1,97 @@
+@import '../../../../styles/constants';
+@import '../../../../styles/inputMixins';
+
+.switcher-wrapper {
+  @include checkbox-wrapper;
+
+  &__checkbox {
+    display: none;
+  }
+
+  &__switcher {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 110px;
+    height: 34px;
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 20px;
+
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  &__inner {
+    position: absolute;
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transform: translateX(-50%);
+
+    transition: 0.3s ease-in;
+
+    &::before,
+    &::after {
+      display: flex;
+      align-items: center;
+      float: left;
+      width: 100%;
+      color: $switcher-text;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    &::before {
+      content: attr(data-firstoptionlabel);
+      text-transform: uppercase;
+      padding-left: 10px;
+      background-color: $switcher-default-color;
+      color: $switcher-text;
+    }
+
+    &::after {
+      content: attr(data-secondoptionlabel);
+      text-transform: uppercase;
+      padding-right: 10px;
+      background-color: $switcher-color;
+      color: $switcher-text;
+      justify-content: right;
+    }
+
+    &--selected {
+      &::after {
+        background-color: $switcher-no;
+      }
+  
+      &::before {
+        background-color: $switcher-yes;
+      }
+    }
+  }
+
+  &__tumbler {
+    position: absolute;
+    left: 5px;
+    display: block;
+    width: 24px;
+    height: 24px;
+
+    background: $switcher-text;
+    border: none;
+    border-radius: 20px;
+
+    transition: 0.3s ease-in;
+  }
+
+  &__checkbox:checked + &__switcher {
+    .switcher-wrapper__inner {
+      transform: translateX(0%);
+    }
+    .switcher-wrapper__tumbler {
+      transform: translateX(315%);
+    }
+  }
+}

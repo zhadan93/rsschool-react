@@ -10,6 +10,10 @@ const Header = (): JSX.Element => {
       name: 'Home',
       path: '/',
     },
+    myCards: {
+      name: 'Api',
+      path: 'api',
+    },
     about: {
       name: 'About',
       path: 'about',

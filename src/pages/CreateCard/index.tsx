@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { FormCardDetails, CardFormDetails } from 'types/types';
 
-import CardForm from 'components/CardForm';
-import FormCardList from 'components/FormCardList';
+import CardForm from 'components/Form/CardForm';
+import FormCardList from 'components/Form/FormCardList';
 
 type CreateCardProps = Record<string, string>;
 type CreateCardState = { formCardsData: FormCardDetails[] };
@@ -24,11 +24,9 @@ class CreateCard extends Component<CreateCardProps, CreateCardState> {
 
   render() {
     return (
-      <div data-testid="create-card" className="create-card">
-        <div className="container">
-          <CardForm onValueSubmit={this.handleSubmit} />
-          <FormCardList formCardsData={this.state.formCardsData} />
-        </div>
+      <div data-testid="create-card" className="container">
+        <CardForm onValueSubmit={this.handleSubmit} />
+        <FormCardList formCardsData={this.state.formCardsData} />
       </div>
     );
   }

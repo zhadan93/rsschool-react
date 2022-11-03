@@ -1,0 +1,14 @@
+@import '../../../../styles/constants';
+@import '../../../../styles/inputMixins';
+
+.date-wrapper {
+  @include input-wrapper;
+
+  &__date {
+    @include input-style;
+  }
+
+  &__date.not-valid {
+    @include not-valid-input;
+  }
+}

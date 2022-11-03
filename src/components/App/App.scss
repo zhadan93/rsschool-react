@@ -1,0 +1,15 @@
+@import '../../styles/constants';
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $contacts-icon;
+  border-radius: 20px;
+  border: none;
+}

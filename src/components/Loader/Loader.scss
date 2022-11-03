@@ -1,0 +1,38 @@
+@import '../../styles/constants';
+@import '../../styles/mixins';
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 100px;
+  height: 100px;
+
+  transform: translate(-50%, -50%);
+
+  @include tablet-middle {
+    min-width: 80px;
+    min-height: 80px;
+    width: 11.62vw;
+    height: 11.62vw;
+  }
+
+  &::before , &::after{
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 0 12px 2px $loader-box-shadow inset;
+  }
+
+  &::after {
+    box-shadow: 0 4px 0 $loader-box-shadow-after inset;
+    animation: rotate 2s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  0% {  transform: rotate(0)}
+  100% { transform: rotate(360deg)}
+}

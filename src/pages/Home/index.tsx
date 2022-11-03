@@ -1,16 +1,17 @@
 import React from 'react';
 
-import CardList from 'components/CardList';
-import CardsData from 'data/cardsData';
 import Searchbar from 'components/Searchbar';
+import CardList from 'components/MyCards/CardList';
+import CardsData from 'data/cardsData';
 
 const Home = (): JSX.Element => {
   return (
     <div data-testid="home" className="container">
-      <Searchbar />
       <CardList cardsData={CardsData} />
     </div>
   );
 };
 
 export default Home;
+
+//<Searchbar />

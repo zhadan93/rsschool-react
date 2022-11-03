@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface CardDetails {
   id: number;
   name: string;
@@ -20,3 +22,11 @@ export interface FormCardDetails {
 }
 
 export type CardFormDetails = Omit<FormCardDetails, 'id'>;
+
+export interface Errors {
+  title?: string;
+  content?: string[];
+  status?: number;
+  className?: string;
+  children?: ReactNode;
+}

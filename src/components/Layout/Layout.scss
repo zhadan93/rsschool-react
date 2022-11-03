@@ -10,9 +10,10 @@
 
 .main {
   position: relative;
-  min-height: calc(100vh - 78px);
+  min-height: calc(100vh - 76px);
   padding-top: 20px;
   color: $main-text;
+  overflow: auto;
 
   .container {
     @include mobile-middle {

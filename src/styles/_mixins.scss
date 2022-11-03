@@ -19,6 +19,12 @@
   }
 }
 
+@mixin tablet-highest {
+  @media (max-width: $tablet-highest) {
+    @content;
+  }
+}
+
 @mixin tablet-middle {
   @media (max-width: $tablet-middle) {
     @content;

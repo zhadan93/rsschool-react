@@ -1,6 +1,8 @@
 import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import './App.scss';
+
 import routes from '../../routes';
 
 const App = (): JSX.Element => {

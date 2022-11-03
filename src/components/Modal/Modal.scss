@@ -1,0 +1,9 @@
+#modal-root {
+  position: relative;
+  z-index: 2;
+}
+
+.modal-root ~ #root {
+  overflow: hidden;
+  padding-right: 10px;
+}

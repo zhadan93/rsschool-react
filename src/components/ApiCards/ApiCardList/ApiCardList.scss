@@ -1,0 +1,45 @@
+@import '../../../styles/mixins';
+
+.api-cards {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+
+    list-style: none;
+
+    @include tablet-lower {
+      justify-content: center;
+    }
+  }
+
+  &__item {
+    width: 32%;
+    height: 380px;
+
+    @include desktop-highest {
+      width: 31.32vw;
+      height: 19.78vw;
+    }
+
+    @include desktop-middle {
+      min-width: 358px;
+      min-height: 225px;
+      width: 42.95vw;
+      height: 27.1vw;
+    }
+
+    @include tablet-lower {
+      width: 601px;
+      height: 380px;
+    }
+
+    @include tablet-lowest {
+      min-width: 200px;
+      min-height: 100px;
+      width: 100vw;
+      height: 59vw;
+    }
+  }
+}

@@ -4,29 +4,21 @@
 
 .searchbar {
   position: relative;
-  width: 380px;
-  margin-left: auto;
-  margin-right: 0;
-  margin-bottom: 20px;
-
-  @include tablet-lower {
-    width: 49.3vw;
-  }
-
-  @include mobile-middle {
-    margin-bottom: 12px;
-  }
+  display: flex;
+  align-items: center;
 
   &__input {
     @include input-style;
 
     padding-left: 45px;
+    width: 380px;
 
     @include tablet-lower {
       padding: 1.3vw 2.2vw;
       padding-left: 5.8vw;
+      width: 49.3vw;
 
-      font-size: 3vw;
+      font-size: 2.6vw;
     }
 
     @include mobile-middle {
@@ -85,11 +77,8 @@
 
   &__magnifier-icon {
     position: absolute;
-    top: 50%;
     left: 10px;
     z-index: -1;
-
-    transform: translateY(-50%);
 
     @include tablet-lower {
       width: 3.9vw;

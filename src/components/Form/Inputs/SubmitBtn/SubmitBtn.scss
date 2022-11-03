@@ -1,0 +1,33 @@
+@import '../../../../styles/constants';
+
+.submit {
+  color: $input-text;
+  font-size: 20px;
+
+  background: $input-submit-background;
+  border: 3px solid $input-submit-background;
+  border-radius: 10px;
+  padding: 10px 20px;
+  
+  transition: 0.5s;
+  
+  cursor: pointer;
+  
+  &:hover {
+    border-color: $input-submit-hover-background;
+    background-color: $input-submit-hover-background;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    background-color: $disabled-background;
+    border-color: $disabled-border;
+    color: $disabled-text;
+    
+     &:hover {
+      background-color: $disabled-background;
+      border-color: $disabled-border;
+      color: $disabled-text;
+    }
+  }
+}
