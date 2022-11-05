@@ -199,11 +199,8 @@ describe('CardForm component', () => {
     await setUpFileInput(avatarTestId, file);
     await setUpCheckboxInput(agreesTestId);
 
-    waitFor(() => {
-      jest.spyOn(Element.prototype, 'getAnimations').mockImplementation(() => [new Animation()]);
-      userEvent.click(screen.getByTestId('submit'));
-      expect(addCardData).toBeCalled();
-    });
+    userEvent.click(screen.getByTestId('submit'));
+    expect(addCardData).toBeCalled();
   });
 
   test('check data submission when not all form fields are valid', async () => {

@@ -167,8 +167,11 @@ class CardForm extends Component<CardFormProps> {
 
         const notificationEl = this.notification.current;
         notificationEl?.classList.add('valid');
-        await notificationEl?.getAnimations()?.[0].finished;
-        notificationEl?.classList.remove('valid');
+
+        const timerId = setTimeout(() => {
+          notificationEl?.classList.remove('valid');
+          clearTimeout(timerId);
+        }, 4000);
       }
     }
   }
