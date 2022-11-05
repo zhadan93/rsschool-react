@@ -1,24 +1,44 @@
-import React from 'react';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 
 import './Modal.scss';
 
-export const modalRootEl = document.getElementById('modal-root');
-
 type ModalProps = {
   className?: string;
   children: JSX.Element;
-  onClose?: () => void;
-  isOpen: boolean;
 };
 
-const Modal = ({ children, isOpen }: ModalProps) => {
-  const modalClassName = 'modal-root';
-  isOpen
-    ? modalRootEl?.classList.add(modalClassName)
-    : modalRootEl?.classList.remove(modalClassName);
+let modalRootEl = document.getElementById('modal-root');
 
-  return modalRootEl && isOpen ? createPortal(<>{children}</>, modalRootEl) : null;
-};
+if (!modalRootEl) {
+  modalRootEl = document.createElement('div');
+  modalRootEl.setAttribute('id', 'modal-root');
+  document.body.appendChild(modalRootEl);
+}
+
+class Modal extends Component<ModalProps> {
+  el = document.createElement('div');
+
+  constructor(props: ModalProps) {
+    super(props);
+  }
+
+  componentDidMount() {
+    if (modalRootEl) {
+      modalRootEl.appendChild(this.el);
+      modalRootEl.classList.add('open-modal');
+      modalRootEl.dataset.testid = 'modal';
+    }
+  }
+
+  componentWillUnmount() {
+    modalRootEl?.removeChild(this.el);
+    modalRootEl?.classList.remove('open-modal');
+  }
+
+  render() {
+    return createPortal(this.props.children, this.el);
+  }
+}
 
 export default Modal;

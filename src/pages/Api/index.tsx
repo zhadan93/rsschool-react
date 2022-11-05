@@ -119,7 +119,7 @@ class Api extends Component<ApiProps, ApiState> {
           />
         </div>
         <div className="api__content">
-          {isLoaded && <Loader />}
+          {isLoaded && <Loader data-testid="loader" />}
           {apiCardsData && apiCardsData.length !== 0 && <ApiCardList apiCardsData={apiCardsData} />}
           {apiCardsData && apiCardsData.length === 0 && (
             <div className="api__message">

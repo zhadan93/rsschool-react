@@ -3,7 +3,7 @@
   z-index: 2;
 }
 
-.modal-root ~ #root {
+.open-modal ~ #root {
   overflow: hidden;
   padding-right: 10px;
 }

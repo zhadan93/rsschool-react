@@ -1,10 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import apiErrorsHandling from 'helpers/apiErrorsHandling';
 import {
   QueryStringParameters,
   PhotoData,
   PhotosData,
   PhotoCardData,
+  PhotosErrors,
 } from 'types/serviceDataTypes';
 import { Errors } from 'types/types';
 
@@ -62,9 +63,7 @@ class PhotosService {
         };
       });
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return apiErrorsHandling(error);
-      }
+      return apiErrorsHandling(error as AxiosError<PhotosErrors>);
     }
     return [];
   }

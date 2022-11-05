@@ -51,12 +51,14 @@ class ApiCard extends Component<ApiCardProps, ApiCardState> {
             <span className="api-card__tags">{photoTags}</span>
           </div>
         </div>
-        <Modal isOpen={this.state.isOpen} onClose={this.toggleModal}>
-          <ApiCardPopUp
-            onClose={this.toggleModal}
-            apiCardData={{ ...this.props.apiCardData, created_at: date }}
-          />
-        </Modal>
+        {this.state.isOpen && (
+          <Modal data-testid="api-card-modal">
+            <ApiCardPopUp
+              onClose={this.toggleModal}
+              apiCardData={{ ...this.props.apiCardData, created_at: date }}
+            />
+          </Modal>
+        )}
       </>
     );
   }

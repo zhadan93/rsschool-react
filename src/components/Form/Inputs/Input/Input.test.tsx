@@ -4,19 +4,19 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
 import Input from '.';
-import { InputData } from '../../../../test/testData';
+import { inputData } from '../../../../test/testData';
 
 describe('Input component', () => {
   test('render Input Component', () => {
-    render(<Input {...InputData} />);
-    expect(screen.getByDisplayValue(InputData.value)).toBeInTheDocument();
+    render(<Input {...inputData} />);
+    expect(screen.getByDisplayValue(inputData.value)).toBeInTheDocument();
   });
 
   test('call the onChange callback handler', async () => {
-    render(<Input {...InputData} />);
+    render(<Input {...inputData} />);
 
     await userEvent.type(screen.getByRole('searchbox'), 'glass');
 
-    expect(InputData.onValueChange).toHaveBeenCalledTimes(5);
+    expect(inputData.onValueChange).toHaveBeenCalledTimes(5);
   });
 });

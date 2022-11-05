@@ -16,7 +16,7 @@ class ApiCardList extends Component<ApiCardListProps> {
 
   render(): JSX.Element {
     return (
-      <div className="api-cards">
+      <div className="api-cards" data-testid="api-cards">
         <ul className="api-cards__list">
           {this.props.apiCardsData.map((apiCardData) => (
             <li className="api-cards__item" key={apiCardData.id}>

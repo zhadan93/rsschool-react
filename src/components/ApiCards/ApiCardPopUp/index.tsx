@@ -43,10 +43,14 @@ const ApiCardPopUp = ({ onClose, className, apiCardData }: ApiCardPopUpProps) =>
   };
 
   return (
-    <>
-      <div className="overlay" onClick={onClose} />
-      <div className={classNames('api-card-popup', className)}>
-        <CloseButton className="api-card-popup__close-btn" onClick={onClose} />
+    <div data-testid="api-card-popup-wrapper">
+      <div data-testid="overlay" className="overlay" onClick={onClose} />
+      <div data-testid="api-card-popup" className={classNames('api-card-popup', className)}>
+        <CloseButton
+          data-testid="api-card-popup-close-btn"
+          className="api-card-popup__close-btn"
+          onClick={onClose}
+        />
         <div className="api-card-popup__personal">
           <img src={imgUrl} alt="img" className="api-card-popup__img" />
         </div>
@@ -70,7 +74,7 @@ const ApiCardPopUp = ({ onClose, className, apiCardData }: ApiCardPopUpProps) =>
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

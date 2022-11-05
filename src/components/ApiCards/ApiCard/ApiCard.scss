@@ -15,6 +15,14 @@
 
   border-radius: 20px;
 
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &:hover {
+    filter: brightness(80%);
+  }
+
   &__img {
     display: flex;
     height: 100%;

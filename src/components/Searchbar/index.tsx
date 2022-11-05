@@ -79,6 +79,7 @@ class Searchbar extends Component<SearchbarProps, SearchbarState> {
     return (
       <div className="searchbar">
         <input
+          data-testid="search"
           className={classNames('searchbar__input', className)}
           placeholder="Search..."
           type="search"

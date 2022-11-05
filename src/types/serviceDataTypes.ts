@@ -13,7 +13,7 @@ export interface PhotoData {
   blur_hash: string;
   likes: number;
   liked_by_user: boolean;
-  description: string;
+  description: string | null;
   user: {
     id: string;
     username: string;
