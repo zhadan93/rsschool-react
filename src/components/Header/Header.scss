@@ -38,6 +38,14 @@
     column-gap: 27px;
       
     list-style: none;
+
+    @include tablet-lowest {
+      column-gap: 4.21vw;
+    }
+  
+    @include mobile-middle {
+      column-gap: 20px;
+    }
     
     &__link {
       position: relative;

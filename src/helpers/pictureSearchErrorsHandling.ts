@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
-import { PhotosErrors } from 'types/serviceDataTypes';
+import { PictureSearchErrors } from 'types/serviceDataTypes';
 
-const apiErrorsHandling = (error: AxiosError<PhotosErrors>) => {
+const pictureSearchErrorsHandling = (error: AxiosError<PictureSearchErrors>) => {
   const { response, request } = error;
 
   if (response) {
@@ -24,4 +24,4 @@ const apiErrorsHandling = (error: AxiosError<PhotosErrors>) => {
   }
 };
 
-export default apiErrorsHandling;
+export default pictureSearchErrorsHandling;

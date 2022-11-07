@@ -1,6 +1,6 @@
-import { PhotoTags } from 'types/serviceDataTypes';
+import { PictureSearchTags } from 'types/serviceDataTypes';
 
-class ApiDataHandling {
+class PictureSearchDataHandling {
   convertDate = (creationDate: string) => {
     const months = [
       'Jan',
@@ -21,9 +21,9 @@ class ApiDataHandling {
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
   };
 
-  getTags = (tags: PhotoTags) => {
+  getTags = (tags: PictureSearchTags) => {
     return tags.reduce((prev, { title }) => prev + `#${title.split(' ').join('')} `, '').trim();
   };
 }
 
-export default new ApiDataHandling();
+export default new PictureSearchDataHandling();

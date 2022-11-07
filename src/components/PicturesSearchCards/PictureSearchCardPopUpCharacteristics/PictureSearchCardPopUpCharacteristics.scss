@@ -1,0 +1,119 @@
+@import '../../../styles/constants';
+@import '../../../styles/mixins';
+
+.picture-search-card-popup-characteristics {
+  display: block;
+  flex-shrink: 0;
+  width: 300px;
+  max-height: 70vh;
+  padding-left: 10px;
+
+  @include desktop-middle {
+    width: 21.4vw;
+    min-width: 164px;
+    padding-left: 0.71vw;
+  }
+
+  @include tablet-middle {
+    padding-left: 5px;
+  }
+
+  @include mobile-highest {
+    width: 100%;
+    max-height: 40vh;
+    padding-left: 0;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+
+    font-size: 22px;
+    text-align: center;
+
+    @include desktop-middle {
+      margin-bottom: 0.71vw;
+      font-size: 1.57vw;
+    }
+
+    @include tablet-middle {
+      margin-bottom: 6px;
+      font-size: 13.5px;
+    }
+  }
+
+  &__list {
+    flex-direction: column;
+    gap: 10px;
+    
+    max-height: 61vh;
+    overflow: auto;
+
+    list-style: none;
+    overscroll-behavior: contain;
+
+    @include desktop-middle {
+      gap: 0.71vw;
+    }
+
+    @include tablet-middle {
+      gap: 5px;
+    }
+
+    @include mobile-highest {
+      max-height: 30vh;
+    }
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+
+    font-size: 18px;
+
+    @include desktop-middle {
+      font-size: 1.28vw;
+    }
+
+    @include tablet-middle {
+      font-size: 11px;
+    }
+  }
+
+  &__name {
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: capitalize;
+
+    @include desktop-middle {
+      font-size: 1.35vw;
+    }
+
+    @include tablet-middle {
+      font-size: 11.6px;
+    }
+  }
+
+  &__likes {
+    @include desktop-middle {
+      gap: 0.35vw;
+    }
+
+    @include tablet-middle {
+      gap: 3px;
+    }
+  }
+
+  .likes__icon {
+    @include desktop-middle {
+      min-width: 14px;
+      min-height: 14px;
+      width: 1.35vw;
+      height: 1.35vw;
+    }
+  }
+}
+

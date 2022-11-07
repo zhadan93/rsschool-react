@@ -1,5 +1,5 @@
-import FormCard from 'components/FormCard';
-import { FormCardDetails } from '../../types/types';
+import FormCard from '../FormCard';
+import { FormCardDetails } from '../../../types/types';
 
 import './FormCardList.scss';
 import React from 'react';

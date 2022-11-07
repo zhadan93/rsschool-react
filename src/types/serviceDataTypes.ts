@@ -1,10 +1,10 @@
-export interface PhotosData {
+export interface PicturesSearchData {
   total: number;
   total_pages: number;
-  results: PhotoData[];
+  results: PictureSearchData[];
 }
 
-export interface PhotoData {
+export interface PictureSearchData {
   id: string;
   created_at: string;
   width: number;
@@ -36,7 +36,7 @@ export interface PhotoData {
     };
   };
   current_user_collections: [];
-  tags: PhotoTags;
+  tags: PictureSearchTags;
   urls: {
     raw: string;
     full: string;
@@ -51,9 +51,9 @@ export interface PhotoData {
   };
 }
 
-export type PhotoTags = { title: string }[];
+export type PictureSearchTags = { title: string }[];
 
-export interface PhotosErrors {
+export interface PictureSearchErrors {
   errors: string[];
 }
 
@@ -64,11 +64,13 @@ export interface QueryStringParameters {
   page?: string;
 }
 
-export interface PhotoCardData
+export interface PictureSearchCardListData
   extends Pick<
-    PhotoData,
+    PictureSearchData,
     'id' | 'created_at' | 'width' | 'height' | 'likes' | 'description' | 'tags'
   > {
   imgUrl: string;
   userName: string;
 }
+
+export type PictureSearchCardData = Omit<PictureSearchCardListData, 'id'>;

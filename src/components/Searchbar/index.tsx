@@ -13,31 +13,7 @@ interface SearchbarProps extends InputHTMLAttributes<HTMLInputElement> {
 type SearchbarState = {
   value: string;
 };
-/*const Searchbar = ({ className, onSearchChange, onSearchSend, ...otherAttr }: SearchbarProps) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onSearchChange && onSearchChange(e.target.value);
-  };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter') {
-      onSearchSend && onSearchSend();
-    }
-  };
-
-  return (
-    <div className="searchbar">
-      <input
-        className={classNames('searchbar__input', className)}
-        placeholder="Search..."
-        type="search"
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        {...otherAttr}
-      />
-      <MagnifierIcon className="searchbar__magnifier-icon" />
-    </div>
-  );
-};*/
 const searchbarKey = 'cardsSearchBar';
 
 class Searchbar extends Component<SearchbarProps, SearchbarState> {

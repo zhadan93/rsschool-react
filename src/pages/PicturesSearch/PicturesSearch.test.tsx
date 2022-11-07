@@ -2,19 +2,25 @@ import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import React from 'react';
-import Api from '.';
+import PicturesSearch from '.';
 
-import { photoServiceData, catSearchPhoto, searchError } from '../../test/testData';
+import {
+  testPicturesSearchServiceData,
+  testCatPicturesSearchData,
+  testPicturesSearchErrors,
+} from '../../test/testData';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('axios');
 const mockAxios = axios as jest.Mocked<typeof axios>;
 
-describe('Api component', () => {
-  test('search photos from API when mounting Api component', async () => {
-    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: photoServiceData }));
+describe('PicturesSearch component', () => {
+  test('search photos from API when mounting PicturesSearch component', async () => {
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: testPicturesSearchServiceData })
+    );
 
-    render(<Api />);
+    render(<PicturesSearch />);
     expect(screen.getByTestId('search')).toBeInTheDocument();
     expect(await screen.findAllByRole('listitem')).toHaveLength(1);
 
@@ -22,20 +28,24 @@ describe('Api component', () => {
   });
 
   test('search photos from API', async () => {
-    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: photoServiceData }));
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: testPicturesSearchServiceData })
+    );
 
-    render(<Api />);
+    render(<PicturesSearch />);
     const searchbar = screen.getByTestId('search');
 
     expect(searchbar).toBeInTheDocument();
     expect(await screen.findAllByRole('listitem')).toHaveLength(1);
 
-    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: catSearchPhoto }));
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: testCatPicturesSearchData })
+    );
 
     userEvent.type(searchbar, 'cat{enter}');
 
     await waitFor(() => {
-      expect(screen.getByText(`${catSearchPhoto.results[0].likes}`)).toBeInTheDocument();
+      expect(screen.getByText(`${testCatPicturesSearchData.results[0].likes}`)).toBeInTheDocument();
     });
 
     expect(await screen.findAllByRole('listitem')).toHaveLength(2);
@@ -44,9 +54,11 @@ describe('Api component', () => {
   });
 
   test('render authorization error when searching for photos', async () => {
-    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: photoServiceData }));
+    mockAxios.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: testPicturesSearchServiceData })
+    );
 
-    render(<Api />);
+    render(<PicturesSearch />);
     const searchbar = screen.getByTestId('search');
 
     expect(searchbar).toBeInTheDocument();
@@ -56,7 +68,7 @@ describe('Api component', () => {
 
     mockAxios.get.mockImplementationOnce(() =>
       Promise.reject({
-        response: { data: searchError, status: errorStatus },
+        response: { data: testPicturesSearchErrors, status: errorStatus },
       })
     );
 

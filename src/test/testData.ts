@@ -61,7 +61,7 @@ export const testFormCardsData = [
   },
 ];
 
-export const testApiCardsData = [
+export const testPicturesSearchCardsData = [
   {
     id: 'EP_OHkgn1JI',
     created_at: '2017-05-29T15:16:16Z',
@@ -108,7 +108,7 @@ export const testApiCardsData = [
   },
 ];
 
-export const photoServiceData = {
+export const testPicturesSearchServiceData = {
   total: 5,
   total_pages: 4,
   results: [
@@ -135,7 +135,7 @@ export const photoServiceData = {
   ],
 };
 
-export const photoData = [
+export const testPicturesSearchData = [
   {
     id: 'mJaD10XeD7w',
     created_at: '2019-06-18T21:06:08Z',
@@ -149,7 +149,7 @@ export const photoData = [
   },
 ];
 
-export const catSearchPhoto = {
+export const testCatPicturesSearchData = {
   total: 10,
   total_pages: 3,
   results: [
@@ -196,6 +196,6 @@ export const catSearchPhoto = {
   ],
 };
 
-export const searchError = {
+export const testPicturesSearchErrors = {
   errors: ['The requested resource doesn’t exist'],
 };

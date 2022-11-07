@@ -1,16 +1,16 @@
 import axios, { AxiosError } from 'axios';
-import apiErrorsHandling from 'helpers/apiErrorsHandling';
+import pictureSearchErrorsHandling from 'helpers/pictureSearchErrorsHandling';
 import {
   QueryStringParameters,
-  PhotoData,
-  PhotosData,
-  PhotoCardData,
-  PhotosErrors,
+  PictureSearchData,
+  PicturesSearchData,
+  PictureSearchCardListData,
+  PictureSearchErrors,
 } from 'types/serviceDataTypes';
 import { Errors } from 'types/types';
 
-class PhotosService {
-  private basePhotosUrl = 'https://api.unsplash.com/';
+class PicturesSearchService {
+  private baseSearchPicturesUrl = 'https://api.unsplash.com/';
   private endpoint = '/search/photos';
   private defaultQueryStringParameters = {
     client_id: 'g5dlozweELUlIRCcjh_j7NprkkIFelz2kPjcwpS9NnE',
@@ -23,21 +23,26 @@ class PhotosService {
       query,
     };
 
-    const url = `${this.basePhotosUrl}${this.endpoint.slice(1)}`;
+    const url = `${this.baseSearchPicturesUrl}${this.endpoint.slice(1)}`;
     return Object.entries(allQueryStringParameters)
       .reduce((current, [key, value]) => current + `${key}=${value}&`, `${url}?`)
       .slice(0, -1);
   }
 
-  async getPhotos(queryStringParameters: QueryStringParameters): Promise<PhotoCardData[] | Errors> {
+  async getPictures(
+    queryStringParameters: QueryStringParameters
+  ): Promise<PictureSearchCardListData[] | Errors> {
     try {
-      const { data } = await axios.get<PhotosData>(this.getRequestUrl(queryStringParameters), {
-        headers: {
-          'Accept-Version': 'v1',
-        },
-      });
+      const { data } = await axios.get<PicturesSearchData>(
+        this.getRequestUrl(queryStringParameters),
+        {
+          headers: {
+            'Accept-Version': 'v1',
+          },
+        }
+      );
 
-      return data.results.map((item: PhotoData) => {
+      return data.results.map((item: PictureSearchData) => {
         const {
           id,
           created_at,
@@ -63,11 +68,11 @@ class PhotosService {
         };
       });
     } catch (error) {
-      return apiErrorsHandling(error as AxiosError<PhotosErrors>);
+      return pictureSearchErrorsHandling(error as AxiosError<PictureSearchErrors>);
     }
     return [];
   }
 }
 
-const photosService = new PhotosService();
-export default photosService;
+const picturesSearchService = new PicturesSearchService();
+export default picturesSearchService;

@@ -1,7 +1,7 @@
 @import '../../../styles/constants';
 @import '../../../styles/mixins';
 
-.api-card {
+.picture-search-card {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@
 
   overflow: hidden;
 
-  background-color: $api-card-background;
+  background-color: $picture-search-card-background;
 
   border-radius: 20px;
 
@@ -74,7 +74,22 @@
     }
   }
 
-  &__icon {
+  &__likes {
+    @include desktop-middle {
+      gap: 0.35vw;
+    }
+
+    @include tablet-lower {
+      gap: 5px;
+      gap: 5px;
+    } 
+
+    @include tablet-lowest {
+      gap: 3px;
+    }
+  }
+
+  .likes__icon {
     @include desktop-middle {
       min-width: 14px;
       min-height: 14px;
@@ -93,12 +108,6 @@
       width: 2.97vw;
       height: 2.97vw;
     }
-  }
-
-  &__likes {
-    display: flex;
-    align-items: center;
-    gap: 5px;
   }
 
   &__tags {
