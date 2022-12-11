@@ -1,70 +1,59 @@
-import React, {
-  Component,
-  forwardRef,
-  ForwardedRef,
-  ChangeEvent,
-  InputHTMLAttributes,
-} from 'react';
+import React, { ChangeEvent, ForwardedRef, forwardRef, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
-import './Switcher.scss';
+import styles from './Switcher.module.scss';
+
+const { switcher, checkbox, wrapper, content, tumbler } = styles;
 
 export interface SwitcherProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  switcherRef?: ForwardedRef<HTMLInputElement>;
   optionLabels?: string[];
   error?: JSX.Element;
+  switcherRef?: ForwardedRef<HTMLInputElement>;
+  register?: Record<string, unknown>;
 }
 
-class Switcher extends Component<SwitcherProps> {
-  constructor(props: SwitcherProps) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const Switcher: React.FC<SwitcherProps> = ({
+  className,
+  optionLabels = [],
+  children,
+  switcherRef,
+  onValueChange,
+  error,
+  register,
+  ...otherAttrs
+}) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onValueChange?.(e);
+  };
 
-  handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { onValueChange } = this.props;
-    onValueChange && onValueChange(e);
-  }
+  const [firstOptionLabel, secondOptionLabel] = optionLabels;
 
-  render(): JSX.Element {
-    const {
-      className,
-      switcherRef,
-      optionLabels = [],
-      children,
-      error,
-      ...otherAttrs
-    } = this.props;
-
-    const [firstOptionLabel, secondOptionLabel] = optionLabels;
-    delete otherAttrs.onValueChange;
-
-    return (
-      <label className={classNames('switcher-wrapper', 'label', className)}>
-        <input
-          className={classNames('switcher-wrapper__checkbox')}
-          onChange={this.handleChange}
-          type="checkbox"
-          ref={switcherRef}
-          {...otherAttrs}
+  return (
+    <label className={classNames(switcher, className)}>
+      <input
+        className={classNames(checkbox)}
+        onChange={handleChange}
+        type="checkbox"
+        ref={switcherRef}
+        {...otherAttrs}
+        {...register}
+      />
+      <div className={wrapper}>
+        <span
+          className={classNames(content, {
+            selected: !firstOptionLabel,
+          })}
+          data-firstoptionlabel={firstOptionLabel}
+          data-secondoptionlabel={secondOptionLabel}
         />
-        <div className="switcher-wrapper__switcher">
-          <span
-            className={classNames('switcher-wrapper__inner', {
-              'switcher-wrapper__inner--selected': !firstOptionLabel,
-            })}
-            data-firstoptionlabel={firstOptionLabel}
-            data-secondoptionlabel={secondOptionLabel}
-          />
-          <span className={'switcher-wrapper__tumbler'} />
-        </div>
-        {children}
-        {error}
-      </label>
-    );
-  }
-}
+        <span className={tumbler} />
+      </div>
+      {children}
+      {error}
+    </label>
+  );
+};
 
 export default Switcher;
 

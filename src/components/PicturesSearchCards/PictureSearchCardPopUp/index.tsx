@@ -13,11 +13,11 @@ type PictureSearchCardPopUpProps = {
   pictureSearchCardData: PictureSearchCardData;
 };
 
-const PictureSearchCardPopUp = ({
+const PictureSearchCardPopUp: React.FC<PictureSearchCardPopUpProps> = ({
   onClose,
   className,
   pictureSearchCardData,
-}: PictureSearchCardPopUpProps) => {
+}) => {
   const { imgUrl, ...otherAttributes } = pictureSearchCardData;
 
   return (

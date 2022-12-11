@@ -6,7 +6,7 @@ type MagnifierIconProps = {
   className: string;
 };
 
-const MagnifierIcon = ({ className }: MagnifierIconProps): JSX.Element => {
+const MagnifierIcon: React.FC<MagnifierIconProps> = ({ className }): JSX.Element => {
   return (
     <svg
       fill="none"

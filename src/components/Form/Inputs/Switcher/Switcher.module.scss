@@ -1,0 +1,95 @@
+@import '../../../../styles/constants';
+@import '../../../../styles/inputMixins';
+
+.switcher {
+  @include checkbox-wrapper;
+}
+
+.checkbox {
+  display: none;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 110px;
+  height: 34px;
+
+  font-size: 14px;
+
+  border: none;
+  border-radius: 20px;
+
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.content {
+  position: absolute;
+  display: flex;
+  width: 200%;
+  height: 100%;
+
+  transform: translateX(-50%);
+
+  transition: 0.3s ease-in;
+
+  &::before,
+  &::after {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 7px;
+
+    color: $switcher-text;
+    font-weight: bold;
+    box-sizing: border-box;
+  }
+
+  &::before {
+    content: attr(data-firstoptionlabel);
+    text-transform: uppercase;
+    background-color: $switcher-default-color;
+  }
+
+  &::after {
+    content: attr(data-secondoptionlabel);
+    text-transform: uppercase;
+    justify-content: flex-end;
+    background-color: $switcher-color;
+  }
+}
+
+.selected {
+  &::after {
+    background-color: $switcher-no;
+  }
+
+  &::before {
+    background-color: $switcher-yes;
+  }
+}
+
+.tumbler {
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  left: 5px;
+
+  background: $switcher-text;
+  border: none;
+  border-radius: 20px;
+
+  transition: 0.3s ease-in;
+}
+
+.checkbox:checked + .wrapper {
+  .content {
+    transform: translateX(0%);
+  }
+  .tumbler {
+    transform: translate(314%);
+  }
+}

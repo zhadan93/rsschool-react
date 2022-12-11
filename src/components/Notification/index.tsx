@@ -9,14 +9,22 @@ type NotificationProps = {
   type: 'success';
   message: string;
   title?: string;
+  isSuccessful?: boolean;
 };
 
-const Notification = ({ className, notificationRef, type, message, title }: NotificationProps) => {
+const Notification = ({
+  isSuccessful,
+  className,
+  notificationRef,
+  type,
+  message,
+  title,
+}: NotificationProps) => {
   return (
     <div
       className={classNames(
         'notification',
-        { 'notification--success': type === 'success' },
+        { 'notification--success': type === 'success', valid: isSuccessful },
         className
       )}
       ref={notificationRef}

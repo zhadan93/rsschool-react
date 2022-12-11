@@ -1,4 +1,4 @@
-import React, { Component, ChangeEvent, KeyboardEvent, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, KeyboardEvent, InputHTMLAttributes, useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 import MagnifierIcon from 'components/Icons/MagnifierIcon';
@@ -6,68 +6,46 @@ import MagnifierIcon from 'components/Icons/MagnifierIcon';
 import './Searchbar.scss';
 
 interface SearchbarProps extends InputHTMLAttributes<HTMLInputElement> {
-  onSearchChange?: (value: string) => void;
-  onSearchSend?: () => void;
+  onSearchSend?: (value: string) => void;
 }
-
-type SearchbarState = {
-  value: string;
-};
 
 const searchbarKey = 'cardsSearchBar';
 
-class Searchbar extends Component<SearchbarProps, SearchbarState> {
-  constructor(props: SearchbarProps) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
+const Searchbar: React.FC<SearchbarProps> = ({ className, onSearchSend, ...otherAttr }) => {
+  const [searchValue, setSearchValue] = useState(localStorage.getItem(searchbarKey) || '');
 
-  componentDidMount() {
-    const value = localStorage.getItem(searchbarKey);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
-    value && this.setState({ value });
-  }
-
-  componentWillUnmount() {
-    localStorage.setItem(searchbarKey, this.state.value);
-  }
-
-  handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { onSearchChange } = this.props;
-    const { value } = e.target;
-    onSearchChange && onSearchChange(value);
-    this.setState({ value });
-  }
-
-  handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.code === 'Enter') {
-      const { onSearchSend } = this.props;
-      onSearchSend && onSearchSend();
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const { code, target } = e;
+    if (code === 'Enter' && target instanceof HTMLInputElement) {
+      onSearchSend?.(target.value);
     }
-  }
+  };
 
-  render() {
-    const { className, onSearchChange, onSearchSend, ...otherAttr } = this.props;
-    return (
-      <div className="searchbar">
-        <input
-          data-testid="search"
-          className={classNames('searchbar__input', className)}
-          placeholder="Search..."
-          type="search"
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          value={this.state.value}
-          {...otherAttr}
-        />
-        <MagnifierIcon className="searchbar__magnifier-icon" />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    return () => {
+      localStorage.setItem(searchbarKey, searchValue);
+    };
+  }, [searchValue]);
+
+  return (
+    <div className="searchbar">
+      <input
+        data-testid="search"
+        className={classNames('searchbar__input', className)}
+        placeholder="Search..."
+        type="search"
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        value={searchValue}
+        {...otherAttr}
+      />
+      <MagnifierIcon className="searchbar__magnifier-icon" />
+    </div>
+  );
+};
 
 export default Searchbar;

@@ -1,287 +1,201 @@
-import React, { Component, createRef, ChangeEvent } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import classNames from 'classnames';
 
-import { InputWithRef } from 'components/Form/Inputs/Input';
-import { SelectWithRef } from 'components/Form/Select';
-import { NotificationWithRef } from 'components/Notification';
-import { SwitcherWithRef } from 'components/Form/Inputs/Switcher';
-import { SubmitBtnWithRef } from 'components/Form/Inputs/SubmitBtn';
-import { UploadFileWithRef } from 'components/Form/Inputs/UploadFile';
-import { DateWithRef } from 'components/Form/Inputs/Date';
-import { CheckboxWithRef } from 'components/Form/Inputs/Checkbox';
+import Input from 'components/Form/Inputs/Input';
+import Select from 'components/Form/Select';
+import Notification from '../../Notification';
+import Switcher from '../Inputs/Switcher';
+import SubmitBtn from 'components/Form/Inputs/SubmitBtn';
+import UploadFile from '../Inputs/UploadFile';
+import Date from 'components/Form/Inputs/Date';
+import Checkbox from 'components/Form/Inputs/Checkbox';
 import Error from 'components/Error';
 
-import { COUNTRIES } from '../../../constants';
 import { CardFormDetails } from 'types/types';
-import './CardForm.scss';
-import { isValidName, isValidUploadImg } from 'helpers/validate';
 
-const disabledSubmitBtn = 'submit--disabled';
+import { COUNTRIES } from '../../../constants';
+import {
+  firstNameOptions,
+  lastNameOptions,
+  dateOptions,
+  countryOptions,
+  agreesOptions,
+  avatarOptions,
+} from 'helpers/validate';
+
+import './CardForm.scss';
+
 const sexValues = ['male', 'female'];
 const notValidClass = 'not-valid';
 
 type CardFormProps = { onValueSubmit: (value: CardFormDetails) => void };
-
-const defaultFormElementValues: Record<string, string | boolean> = {
-  firstName: '',
-  lastName: '',
-  birthday: '',
-  sex: false,
-  country: 'Choose country',
-  avatar: '',
-  agrees: false,
+type FormDetails = {
+  firstName: string;
+  lastName: string;
+  birthday: string;
+  sex: boolean;
+  country: string;
+  avatar: FileList;
+  agrees: boolean;
 };
 
-class CardForm extends Component<CardFormProps> {
-  private firstName = createRef<HTMLInputElement>();
-  private lastName = createRef<HTMLInputElement>();
-  private birthday = createRef<HTMLInputElement>();
-  private sex = createRef<HTMLInputElement>();
-  private country = createRef<HTMLSelectElement>();
-  private avatar = createRef<HTMLInputElement>();
-  private agrees = createRef<HTMLInputElement>();
+const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors, isValid, isSubmitSuccessful },
+  } = useForm<FormDetails>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      birthday: '',
+      sex: false,
+      country: 'Choose country',
+      agrees: false,
+    },
+  });
 
-  private submit = createRef<HTMLInputElement>();
-  private formElements: Record<string, HTMLInputElement | HTMLSelectElement> = {};
-  private errors: Record<string, boolean> = {};
-  private notification = createRef<HTMLDivElement>();
+  const firstName = { ...register('firstName', firstNameOptions) };
+  const lastName = { ...register('lastName', lastNameOptions) };
+  const birthday = { ...register('birthday', dateOptions) };
+  const sex = { ...register('sex') };
+  const country = { ...register('country', countryOptions) };
+  const avatar = { ...register('avatar', avatarOptions) };
+  const agrees = { ...register('agrees', agreesOptions) };
 
-  constructor(props: CardFormProps) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [hasErrors, setHasErrors] = useState(false);
 
-  toggleSubmitBtnState(isDisabled: boolean) {
-    const btn = this.submit.current;
-    if (btn) {
-      btn.disabled = isDisabled;
-      isDisabled ? btn.classList.add(disabledSubmitBtn) : btn.classList.remove(disabledSubmitBtn);
-    }
-  }
+  const onError = () => {
+    setIsDisabled(true);
+    setHasErrors(true);
+  };
 
-  isValidForm() {
-    return !Object.values(this.errors).some((item) => item);
-  }
+  const onSubmit = handleSubmit((data) => {
+    const [male, female] = sexValues;
+    const { firstName, lastName, birthday, country, avatar, sex } = data;
+    const imgFile = avatar[0];
 
-  async handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-    const { id } = e.target;
+    imgFile &&
+      onValueSubmit({
+        firstName,
+        lastName,
+        birthday,
+        country,
+        avatar: URL.createObjectURL(imgFile),
+        sex: sex ? male : female,
+      });
+  }, onError);
 
-    const notValidEl = this.errors[id];
-    if (notValidEl) {
-      this.errors[id] = false;
-      this.formElements[id].classList.remove(notValidClass);
-    }
-
-    const isValidForm = this.isValidForm();
-    isValidForm && this.toggleSubmitBtnState(false);
-  }
-
-  setDefaultValue(key: string, el: HTMLInputElement | HTMLSelectElement) {
-    const defaultValue = defaultFormElementValues[key];
-
-    if (typeof defaultValue === 'string') {
-      el.value = defaultValue;
-    } else if (typeof defaultValue === 'boolean' && el instanceof HTMLInputElement) {
-      el.checked = defaultValue;
-    }
-  }
-
-  defineNotValidField(key: string, el: HTMLInputElement | HTMLSelectElement) {
-    el.classList.add(notValidClass);
-    this.errors[key] = true;
-
-    this.setDefaultValue(key, el);
-  }
-
-  resetForm() {
-    Object.entries(this.formElements).forEach(([key, el]) => {
-      this.setDefaultValue(key, el);
-    });
-  }
-
-  async handleSubmit(e: ChangeEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const firstNameEl = this.firstName.current;
-    const lastNameEl = this.lastName.current;
-    const birthdayEl = this.birthday.current;
-    const sexEl = this.sex.current;
-    const countryEl = this.country.current;
-    const avatarEl = this.avatar.current;
-    const agreesEl = this.agrees.current;
-
-    if (firstNameEl && lastNameEl && birthdayEl && sexEl && countryEl && avatarEl && agreesEl) {
-      this.formElements = {
-        firstName: firstNameEl,
-        lastName: lastNameEl,
-        birthday: birthdayEl,
-        sex: sexEl,
-        country: countryEl,
-        avatar: avatarEl,
-        agrees: agreesEl,
-      };
-
-      const firstName = firstNameEl.value;
-      const isValidFirstName = isValidName(firstName);
-
-      !isValidFirstName && this.defineNotValidField('firstName', firstNameEl);
-
-      const lastName = lastNameEl.value;
-      const isValidLastName = isValidName(lastName);
-      !isValidLastName && this.defineNotValidField('lastName', lastNameEl);
-
-      const birthday = birthdayEl.value;
-      const isValidBirthday = !!birthday;
-      !isValidBirthday && this.defineNotValidField('birthday', birthdayEl);
-
-      const country = countryEl.value;
-      const isValidCountry = country !== defaultFormElementValues.country;
-      !isValidCountry && this.defineNotValidField('country', countryEl);
-
-      const avatar = avatarEl.files?.[0];
-      const isValidAvatar = isValidUploadImg(avatar);
-      !isValidAvatar && this.defineNotValidField('avatar', avatarEl);
-
-      const isValidAgrees = agreesEl.checked;
-      !isValidAgrees && this.defineNotValidField('agrees', agreesEl);
-
-      const sex = sexEl.checked;
-      const [male, female] = sexValues;
-
-      this.toggleSubmitBtnState(true);
-
-      if (this.isValidForm() && avatar) {
-        let url = '';
-        url = URL.createObjectURL(avatar);
-
-        this.props.onValueSubmit({
-          firstName,
-          lastName,
-          birthday,
-          country,
-          avatar: url,
-          sex: sex ? male : female,
-        });
-
-        this.resetForm();
-
-        const notificationEl = this.notification.current;
-        notificationEl?.classList.add('valid');
-
-        const timerId = setTimeout(() => {
-          notificationEl?.classList.remove('valid');
-          clearTimeout(timerId);
-        }, 4000);
+  useEffect(() => {
+    const subscription = watch((value) => {
+      if (value && !hasErrors) {
+        setIsDisabled(false);
+        subscription.unsubscribe();
       }
-    }
-  }
+    });
+  }, [watch, hasErrors]);
 
-  render() {
-    const { country } = defaultFormElementValues;
+  useEffect(() => {
+    isValid && setIsDisabled(false);
+  }, [isValid]);
 
-    if (typeof country === 'string') {
-      return (
-        <>
-          <form
-            data-testid="card-form"
-            className="card-form main__card-form"
-            onSubmit={this.handleSubmit}
-          >
-            <InputWithRef
-              data-testid="first-name"
-              className="card-form__input"
-              id="firstName"
-              ref={this.firstName}
-              onValueChange={this.handleChange}
-              error={
-                <Error className="card-form__error">
-                  Only Alphabets and more then one characters
-                </Error>
-              }
-            >
-              First Name
-            </InputWithRef>
-            <InputWithRef
-              data-testid="last-name"
-              className="card-form__input"
-              id="lastName"
-              ref={this.lastName}
-              onValueChange={this.handleChange}
-              error={
-                <Error className="card-form__error">
-                  Only Alphabets and more then one characters
-                </Error>
-              }
-            >
-              Last Name
-            </InputWithRef>
-            <DateWithRef
-              data-testid="birthday"
-              className="card-form__input"
-              id="birthday"
-              ref={this.birthday}
-              onValueChange={this.handleChange}
-              error={<Error className="card-form__error">You need to choose date</Error>}
-            >
-              Birthday
-            </DateWithRef>
-            <SwitcherWithRef
-              data-testid="sex"
-              className="card-form__switcher"
-              id="sex"
-              ref={this.sex}
-              onValueChange={this.handleChange}
-              optionLabels={sexValues}
-            >
-              Sex
-            </SwitcherWithRef>
-            <SelectWithRef
-              className="card-form__select"
-              options={COUNTRIES}
-              id="country"
-              ref={this.country}
-              defaultValue={country}
-              onValueChange={this.handleChange}
-              error={<Error className="card-form__error">You need to choose country</Error>}
-            >
-              Country
-            </SelectWithRef>
-            <UploadFileWithRef
-              data-testid="avatar"
-              className="card-form__file"
-              id="avatar"
-              ref={this.avatar}
-              onValueChange={this.handleChange}
-              error={<Error className="card-form__error">You need to upload image</Error>}
-            >
-              Upload Photo
-            </UploadFileWithRef>
-            <CheckboxWithRef
-              data-testid="agrees"
-              id="agrees"
-              ref={this.agrees}
-              onValueChange={this.handleChange}
-              error={<Error className="card-form__error">You need to agree</Error>}
-            >
-              I consent to my personal data
-            </CheckboxWithRef>
-            <SubmitBtnWithRef
-              data-testid="submit"
-              className="card-form__submit"
-              value="Create Card"
-              ref={this.submit}
-              disabled
-            />
-          </form>
-          <NotificationWithRef
-            ref={this.notification}
-            type="success"
-            message={'Data saved successfully!'}
-          />
-        </>
-      );
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setHasErrors(false);
+      reset();
+      setIsSuccessful(true);
+      const timerId = setTimeout(() => {
+        setIsSuccessful(false);
+        clearTimeout(timerId);
+      }, 4000);
+      setIsDisabled(true);
     }
-  }
-}
+  }, [isSubmitSuccessful, reset]);
+
+  return (
+    <>
+      <form data-testid="card-form" className="card-form main__card-form" onSubmit={onSubmit}>
+        <Input
+          data-testid="first-name"
+          className={classNames('card-form__input', { [notValidClass]: errors.firstName?.message })}
+          id="firstName"
+          register={firstName}
+          error={<Error className="card-form__error">{errors.firstName?.message}</Error>}
+        >
+          First Name
+        </Input>
+        <Input
+          data-testid="last-name"
+          className={classNames('card-form__input', { [notValidClass]: errors.lastName?.message })}
+          id="lastName"
+          register={lastName}
+          error={<Error className="card-form__error">{errors.lastName?.message}</Error>}
+        >
+          Last Name
+        </Input>
+        <Date
+          data-testid="birthday"
+          className={classNames('card-form__input', { [notValidClass]: errors.birthday?.message })}
+          id="birthday"
+          register={birthday}
+          error={<Error className="card-form__error">{errors.birthday?.message}</Error>}
+        >
+          Birthday
+        </Date>
+        <Switcher
+          data-testid="sex"
+          className="card-form__switcher"
+          id="sex"
+          register={sex}
+          optionLabels={sexValues}
+        >
+          Sex
+        </Switcher>
+        <Select
+          className={classNames('card-form__select', { [notValidClass]: errors.country?.message })}
+          options={COUNTRIES}
+          id="country"
+          register={country}
+          error={<Error className="card-form__error">{errors.country?.message}</Error>}
+        >
+          Country
+        </Select>
+        <UploadFile
+          data-testid="avatar"
+          className={classNames('card-form__file', { [notValidClass]: errors.avatar?.message })}
+          id="avatar"
+          register={avatar}
+          error={<Error className="card-form__error">{errors.avatar?.message}</Error>}
+        >
+          Upload Photo
+        </UploadFile>
+        <Checkbox
+          data-testid="agrees"
+          id="agrees"
+          register={agrees}
+          error={<Error className="card-form__error">{errors.agrees?.message}</Error>}
+        >
+          I consent to my personal data
+        </Checkbox>
+        <SubmitBtn
+          data-testid="submit"
+          className="card-form__submit"
+          value="Create Card"
+          disabled={isDisabled}
+        />
+      </form>
+      <Notification
+        isSuccessful={isSuccessful}
+        type="success"
+        message={'Data saved successfully!'}
+      />
+    </>
+  );
+};
 
 export default CardForm;

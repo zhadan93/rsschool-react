@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Searchbar from 'components/Searchbar';
 import CardList from 'components/MyCards/CardList';
 import CardsData from 'data/cardsData';
 
@@ -13,5 +12,3 @@ const Home = (): JSX.Element => {
 };
 
 export default Home;
-
-//<Searchbar />

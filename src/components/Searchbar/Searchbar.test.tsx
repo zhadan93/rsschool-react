@@ -24,10 +24,10 @@ describe('Searchbar component', () => {
 
     const { unmount } = render(<Searchbar />);
 
-    await userEvent.type(screen.getByRole('searchbox'), searchValue);
+    await userEvent.type(screen.getByTestId('search'), searchValue);
 
     unmount();
-    expect(setItem).toHaveBeenCalledTimes(1);
+    expect(setItem).toBeCalled();
     expect(setItem).toHaveBeenCalledWith(searchKey, searchValue);
   });
 
@@ -41,13 +41,13 @@ describe('Searchbar component', () => {
 
     const { unmount } = render(<Searchbar />);
 
-    await userEvent.type(screen.getByRole('searchbox'), searchValue);
+    await userEvent.type(screen.getByTestId('search'), searchValue);
 
     unmount();
     expect(setItem).toHaveBeenCalledWith(searchKey, searchValue);
 
     render(<Searchbar />);
-    expect(getItem).toHaveBeenCalledTimes(2);
+    expect(getItem).toBeCalled();
 
     expect(screen.getByDisplayValue(searchValue)).toBeInTheDocument();
   });

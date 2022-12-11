@@ -10,9 +10,9 @@ type PictureSearchCardPopUpCharacteristicsProps = {
   pictureSearchCardCharacteristicsData: Omit<PictureSearchCardData, 'imgUrl'>;
 };
 
-const PictureSearchCardPopUpCharacteristics = ({
-  pictureSearchCardCharacteristicsData,
-}: PictureSearchCardPopUpCharacteristicsProps) => {
+const PictureSearchCardPopUpCharacteristics: React.FC<
+  PictureSearchCardPopUpCharacteristicsProps
+> = ({ pictureSearchCardCharacteristicsData }) => {
   const { likes, tags, width, height } = pictureSearchCardCharacteristicsData;
 
   const defaultData: Record<string, { name?: string }> = {

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import './Modal.scss';
@@ -16,29 +16,23 @@ if (!modalRootEl) {
   document.body.appendChild(modalRootEl);
 }
 
-class Modal extends Component<ModalProps> {
-  el = document.createElement('div');
+const Modal: React.FC<ModalProps> = ({ children }) => {
+  const el = document.createElement('div');
 
-  constructor(props: ModalProps) {
-    super(props);
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     if (modalRootEl) {
-      modalRootEl.appendChild(this.el);
+      modalRootEl.appendChild(el);
       modalRootEl.classList.add('open-modal');
       modalRootEl.dataset.testid = 'modal';
     }
-  }
 
-  componentWillUnmount() {
-    modalRootEl?.removeChild(this.el);
-    modalRootEl?.classList.remove('open-modal');
-  }
+    return () => {
+      modalRootEl?.removeChild(el);
+      modalRootEl?.classList.remove('open-modal');
+    };
+  }, [el]);
 
-  render() {
-    return createPortal(this.props.children, this.el);
-  }
-}
+  return createPortal(children, el);
+};
 
 export default Modal;

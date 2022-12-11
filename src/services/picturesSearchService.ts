@@ -17,7 +17,7 @@ class PicturesSearchService {
   };
 
   getRequestUrl(queryStringParameters: QueryStringParameters): string {
-    const query = queryStringParameters.query || 'mountain';
+    const query = queryStringParameters.query;
     const allQueryStringParameters = {
       ...this.defaultQueryStringParameters,
       query,

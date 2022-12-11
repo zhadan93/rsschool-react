@@ -1,35 +1,24 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FormCardDetails, CardFormDetails } from 'types/types';
 
 import CardForm from 'components/Form/CardForm';
 import FormCardList from 'components/Form/FormCardList';
 
 type CreateCardProps = Record<string, string>;
-type CreateCardState = { formCardsData: FormCardDetails[] };
 
-class CreateCard extends Component<CreateCardProps, CreateCardState> {
-  constructor(props: CreateCardProps) {
-    super(props);
-    this.state = {
-      formCardsData: [],
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const CreateCard: React.FC<CreateCardProps> = () => {
+  const [data, setData] = useState<FormCardDetails[]>([]);
 
-  handleSubmit(value: CardFormDetails) {
-    this.setState((prevState) => ({
-      formCardsData: [...prevState.formCardsData, { ...value, id: prevState.formCardsData.length }],
-    }));
-  }
+  const handleSubmit = (value: CardFormDetails) => {
+    setData((prevState) => [...prevState, { ...value, id: prevState.length }]);
+  };
 
-  render() {
-    return (
-      <div data-testid="create-card" className="container">
-        <CardForm onValueSubmit={this.handleSubmit} />
-        <FormCardList formCardsData={this.state.formCardsData} />
-      </div>
-    );
-  }
-}
+  return (
+    <div data-testid="create-card" className="container">
+      <CardForm onValueSubmit={handleSubmit} />
+      <FormCardList formCardsData={data} />
+    </div>
+  );
+};
 
 export default CreateCard;

@@ -7,15 +7,20 @@ export interface UploadFileProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   uploadFileRef?: ForwardedRef<HTMLInputElement>;
   error?: JSX.Element;
+  register?: Record<string, unknown>;
 }
 
-const UploadFile = (props: UploadFileProps) => {
-  const { className, children, uploadFileRef, error, ...otherAttrs } = props;
-  delete otherAttrs.onValueChange;
-
+const UploadFile: React.FC<UploadFileProps> = ({
+  onValueChange,
+  className,
+  children,
+  uploadFileRef,
+  error,
+  register,
+  ...otherAttrs
+}) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { onValueChange } = props;
-    onValueChange && onValueChange(e);
+    onValueChange?.(e);
   };
 
   return (
@@ -27,6 +32,7 @@ const UploadFile = (props: UploadFileProps) => {
         type="file"
         ref={uploadFileRef}
         {...otherAttrs}
+        {...register}
       />
       {error}
     </label>

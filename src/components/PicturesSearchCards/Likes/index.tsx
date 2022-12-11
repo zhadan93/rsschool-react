@@ -9,7 +9,7 @@ type LikesProps = {
   likes: number;
 };
 
-const Likes = ({ likes, className }: LikesProps) => {
+const Likes: React.FC<LikesProps> = ({ likes, className }) => {
   return (
     <span className={classNames('likes', className)}>
       <LikeIcon className="likes__icon" />

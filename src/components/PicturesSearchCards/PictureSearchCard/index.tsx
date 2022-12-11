@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import { PictureSearchCardData } from 'types/serviceDataTypes';
 import Modal from 'components/Modal';
@@ -12,57 +12,39 @@ type PictureSearchCardProps = {
   pictureSearchCardData: PictureSearchCardData;
 };
 
-type PictureSearchCardState = {
-  isOpen: boolean;
-};
+const PictureSearchCard: React.FC<PictureSearchCardProps> = ({ pictureSearchCardData }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-class PictureSearchCard extends Component<PictureSearchCardProps, PictureSearchCardState> {
-  constructor(props: PictureSearchCardProps) {
-    super(props);
-    this.toggleModal = this.toggleModal.bind(this);
-    this.state = {
-      isOpen: false,
-    };
-  }
+  const toggleModal = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
-  toggleModal() {
-    this.setState((prevState) => ({
-      isOpen: !prevState.isOpen,
-    }));
-  }
+  const { imgUrl, created_at, likes, tags } = pictureSearchCardData;
+  const { convertDate, getTags } = pictureSearchDataHandling;
 
-  render() {
-    const { imgUrl, created_at, likes, tags } = this.props.pictureSearchCardData;
-    const { convertDate, getTags } = pictureSearchDataHandling;
+  const date = convertDate(created_at);
+  const photoTags = getTags(tags.slice(0, 2));
 
-    const date = convertDate(created_at);
-    const photoTags = getTags(tags.slice(0, 2));
-
-    return (
-      <>
-        <div
-          data-testid="picture-search-card"
-          className="picture-search-card"
-          onClick={this.toggleModal}
-        >
-          <img src={imgUrl} alt="img" className="picture-search-card__img" />
-          <div className="picture-search-card__title">
-            {date}
-            <Likes likes={likes} className="picture-search-card__likes" />
-            <span className="picture-search-card__tags">{photoTags}</span>
-          </div>
+  return (
+    <>
+      <div data-testid="picture-search-card" className="picture-search-card" onClick={toggleModal}>
+        <img src={imgUrl} alt="img" className="picture-search-card__img" />
+        <div className="picture-search-card__title">
+          {date}
+          <Likes likes={likes} className="picture-search-card__likes" />
+          <span className="picture-search-card__tags">{photoTags}</span>
         </div>
-        {this.state.isOpen && (
-          <Modal data-testid="picture-search-card-modal">
-            <PicturesSearchCardPopUp
-              onClose={this.toggleModal}
-              pictureSearchCardData={{ ...this.props.pictureSearchCardData, created_at: date }}
-            />
-          </Modal>
-        )}
-      </>
-    );
-  }
-}
+      </div>
+      {isOpen && (
+        <Modal data-testid="picture-search-card-modal">
+          <PicturesSearchCardPopUp
+            onClose={toggleModal}
+            pictureSearchCardData={{ ...pictureSearchCardData, created_at: date }}
+          />
+        </Modal>
+      )}
+    </>
+  );
+};
 
 export default PictureSearchCard;

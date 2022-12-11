@@ -35,7 +35,7 @@ describe('CardForm component', () => {
     const firstNameField = await setUpTextInput(firstNameTestId, '1p0');
 
     await userEvent.click(screen.getByTestId('submit'));
-    expect(firstNameField).toHaveValue('');
+    await expect(firstNameField).toHaveValue('');
     expect(firstNameField.classList.contains(notValidClass)).toBeTruthy();
   });
 
