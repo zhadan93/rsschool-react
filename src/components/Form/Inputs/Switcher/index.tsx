@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ForwardedRef, forwardRef, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 import styles from './Switcher.module.scss';
@@ -9,7 +9,6 @@ export interface SwitcherProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   optionLabels?: string[];
   error?: JSX.Element;
-  switcherRef?: ForwardedRef<HTMLInputElement>;
   register?: Record<string, unknown>;
 }
 
@@ -17,7 +16,6 @@ const Switcher: React.FC<SwitcherProps> = ({
   className,
   optionLabels = [],
   children,
-  switcherRef,
   onValueChange,
   error,
   register,
@@ -35,7 +33,6 @@ const Switcher: React.FC<SwitcherProps> = ({
         className={classNames(checkbox)}
         onChange={handleChange}
         type="checkbox"
-        ref={switcherRef}
         {...otherAttrs}
         {...register}
       />
@@ -56,7 +53,3 @@ const Switcher: React.FC<SwitcherProps> = ({
 };
 
 export default Switcher;
-
-export const SwitcherWithRef = forwardRef<HTMLInputElement, SwitcherProps>((props, ref) => (
-  <Switcher {...props} switcherRef={ref} />
-));

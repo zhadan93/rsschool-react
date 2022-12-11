@@ -1,4 +1,11 @@
-import React, { ChangeEvent, KeyboardEvent, InputHTMLAttributes, useState, useEffect } from 'react';
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  InputHTMLAttributes,
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
 
 import MagnifierIcon from 'components/Icons/MagnifierIcon';
@@ -13,6 +20,7 @@ const searchbarKey = 'cardsSearchBar';
 
 const Searchbar: React.FC<SearchbarProps> = ({ className, onSearchSend, ...otherAttr }) => {
   const [searchValue, setSearchValue] = useState(localStorage.getItem(searchbarKey) || '');
+  const searchbarRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -26,10 +34,11 @@ const Searchbar: React.FC<SearchbarProps> = ({ className, onSearchSend, ...other
   };
 
   useEffect(() => {
+    const { current } = searchbarRef;
     return () => {
-      localStorage.setItem(searchbarKey, searchValue);
+      current && localStorage.setItem(searchbarKey, current.value);
     };
-  }, [searchValue]);
+  }, []);
 
   return (
     <div className="searchbar">
@@ -38,6 +47,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ className, onSearchSend, ...other
         className={classNames('searchbar__input', className)}
         placeholder="Search..."
         type="search"
+        ref={searchbarRef}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         value={searchValue}

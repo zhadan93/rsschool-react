@@ -1,11 +1,10 @@
-import React, { ChangeEvent, forwardRef, ForwardedRef, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 import './UploadFile.scss';
 
 export interface UploadFileProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  uploadFileRef?: ForwardedRef<HTMLInputElement>;
   error?: JSX.Element;
   register?: Record<string, unknown>;
 }
@@ -14,7 +13,6 @@ const UploadFile: React.FC<UploadFileProps> = ({
   onValueChange,
   className,
   children,
-  uploadFileRef,
   error,
   register,
   ...otherAttrs
@@ -30,7 +28,6 @@ const UploadFile: React.FC<UploadFileProps> = ({
         className={classNames('upload-file-wrapper__upload-file', className)}
         onChange={handleChange}
         type="file"
-        ref={uploadFileRef}
         {...otherAttrs}
         {...register}
       />
@@ -40,7 +37,3 @@ const UploadFile: React.FC<UploadFileProps> = ({
 };
 
 export default UploadFile;
-
-export const UploadFileWithRef = forwardRef<HTMLInputElement, UploadFileProps>((props, ref) => (
-  <UploadFile {...props} uploadFileRef={ref} />
-));

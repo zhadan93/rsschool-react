@@ -1,25 +1,17 @@
-import React, { forwardRef, ForwardedRef } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import './Notification.scss';
 
 type NotificationProps = {
   className?: string;
-  notificationRef?: ForwardedRef<HTMLDivElement>;
   type: 'success';
   message: string;
   title?: string;
   isSuccessful?: boolean;
 };
 
-const Notification = ({
-  isSuccessful,
-  className,
-  notificationRef,
-  type,
-  message,
-  title,
-}: NotificationProps) => {
+const Notification = ({ isSuccessful, className, type, message, title }: NotificationProps) => {
   return (
     <div
       className={classNames(
@@ -27,7 +19,6 @@ const Notification = ({
         { 'notification--success': type === 'success', valid: isSuccessful },
         className
       )}
-      ref={notificationRef}
     >
       <span
         className={classNames('notification__indicate', {
@@ -41,7 +32,3 @@ const Notification = ({
 };
 
 export default Notification;
-
-export const NotificationWithRef = forwardRef<HTMLDivElement, NotificationProps>((props, ref) => (
-  <Notification {...props} notificationRef={ref} />
-));

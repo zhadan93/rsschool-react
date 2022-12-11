@@ -68,37 +68,33 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const [hasErrors, setHasErrors] = useState(false);
 
   const onError = () => {
     setIsDisabled(true);
-    setHasErrors(true);
   };
 
   const onSubmit = handleSubmit((data) => {
     const [male, female] = sexValues;
     const { firstName, lastName, birthday, country, avatar, sex } = data;
-    const imgFile = avatar[0];
 
-    imgFile &&
-      onValueSubmit({
-        firstName,
-        lastName,
-        birthday,
-        country,
-        avatar: URL.createObjectURL(imgFile),
-        sex: sex ? male : female,
-      });
+    onValueSubmit({
+      firstName,
+      lastName,
+      birthday,
+      country,
+      avatar: URL.createObjectURL(avatar[0]),
+      sex: sex ? male : female,
+    });
   }, onError);
 
   useEffect(() => {
     const subscription = watch((value) => {
-      if (value && !hasErrors) {
+      if (value || isSubmitSuccessful) {
         setIsDisabled(false);
         subscription.unsubscribe();
       }
     });
-  }, [watch, hasErrors]);
+  }, [watch, isSubmitSuccessful]);
 
   useEffect(() => {
     isValid && setIsDisabled(false);
@@ -106,7 +102,6 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      setHasErrors(false);
       reset();
       setIsSuccessful(true);
       const timerId = setTimeout(() => {
@@ -176,6 +171,7 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
         </UploadFile>
         <Checkbox
           data-testid="agrees"
+          className={classNames({ [notValidClass]: errors.agrees?.message })}
           id="agrees"
           register={agrees}
           error={<Error className="card-form__error">{errors.agrees?.message}</Error>}

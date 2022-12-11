@@ -47,14 +47,3 @@ const Header = (): JSX.Element => {
 };
 
 export default Header;
-
-/*<li>
-              <NavLink to="/" className={({ isActive }) => setLinkClassName(isActive)} end>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="about" className={({ isActive }) => setLinkClassName(isActive)} end>
-                About
-              </NavLink>
-            </li> */

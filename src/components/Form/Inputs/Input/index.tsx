@@ -1,18 +1,16 @@
-import React, { forwardRef, ForwardedRef, ChangeEvent, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 import './Input.scss';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  inputRef?: ForwardedRef<HTMLInputElement>;
   error?: JSX.Element;
   register?: Record<string, unknown>;
 }
 
 const Input: React.FC<InputProps> = ({
   onValueChange,
-  inputRef,
   children,
   className,
   error,
@@ -30,7 +28,6 @@ const Input: React.FC<InputProps> = ({
         className={classNames('input-wrapper__input', className)}
         onChange={handleChange}
         type="text"
-        ref={inputRef}
         {...otherAttrs}
         {...register}
       />
@@ -40,7 +37,3 @@ const Input: React.FC<InputProps> = ({
 };
 
 export default Input;
-
-export const InputWithRef = forwardRef<HTMLInputElement, InputProps>((props, ref) => (
-  <Input {...props} inputRef={ref} />
-));

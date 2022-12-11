@@ -1,17 +1,13 @@
-import React, { forwardRef, ForwardedRef, ChangeEvent, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 import './SubmitBtn.scss';
 
 export interface SubmitBtnProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  submitRef?: ForwardedRef<HTMLInputElement>;
 }
 
-const SubmitBtn = (props: SubmitBtnProps) => {
-  const { className, submitRef, ...otherAttrs } = props;
-  const { disabled } = otherAttrs;
-
+const SubmitBtn: React.FC<SubmitBtnProps> = ({ className, disabled, ...otherAttrs }) => {
   return (
     <input
       className={classNames(
@@ -22,14 +18,10 @@ const SubmitBtn = (props: SubmitBtnProps) => {
         className
       )}
       type="submit"
-      ref={submitRef}
+      disabled={disabled}
       {...otherAttrs}
     />
   );
 };
 
 export default SubmitBtn;
-
-export const SubmitBtnWithRef = forwardRef<HTMLInputElement, SubmitBtnProps>((props, ref) => (
-  <SubmitBtn {...props} submitRef={ref} />
-));

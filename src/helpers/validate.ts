@@ -27,8 +27,9 @@ export const countryOptions = {
 export const avatarOptions = {
   required: 'You need to upload avatar',
   validate: {
-    acceptedFormats: (files: FileList) =>
-      /\.(png|svg|jpg|jpeg|gif)$/i.test(files[0].name) || 'Only image',
+    acceptedFormats: (files: FileList) => {
+      return /\.(png|svg|jpg|jpeg|gif)$/i.test(files[0].name) || 'Only image';
+    },
   },
 };
 

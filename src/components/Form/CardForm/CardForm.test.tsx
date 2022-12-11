@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -31,37 +31,42 @@ describe('CardForm component', () => {
 
   test('check validity of firstName field when entering non-Alphabets and resetting value', async () => {
     const addCardData = addCardDataMock();
-    render(<CardForm onValueSubmit={addCardData} />);
-    const firstNameField = await setUpTextInput(firstNameTestId, '1p0');
+    const value = '1p0';
 
-    await userEvent.click(screen.getByTestId('submit'));
-    await expect(firstNameField).toHaveValue('');
+    render(<CardForm onValueSubmit={addCardData} />);
+    const firstNameField = await setUpTextInput(firstNameTestId, value);
+
+    await act(() => userEvent.click(screen.getByTestId('submit')));
+    expect(firstNameField).toHaveValue(value);
     expect(firstNameField.classList.contains(notValidClass)).toBeTruthy();
   });
 
   test('check invalid state of lastName field when entering less than 2 characters and resetting value', async () => {
     const addCardData = addCardDataMock();
-    render(<CardForm onValueSubmit={addCardData} />);
-    const lastNameField = await setUpTextInput(lastNameTestId, 'p');
+    const value = 'p';
 
-    await userEvent.click(screen.getByTestId('submit'));
-    expect(lastNameField).toHaveValue('');
+    render(<CardForm onValueSubmit={addCardData} />);
+    const lastNameField = await setUpTextInput(lastNameTestId, value);
+
+    await act(() => userEvent.click(screen.getByTestId('submit')));
+    expect(lastNameField).toHaveValue(value);
     expect(lastNameField.classList.contains(notValidClass)).toBeTruthy();
   });
 
   test('check class reset for invalid lastName field when value changes', async () => {
     const addCardData = addCardDataMock();
     const changeValue = 'I';
+    const value = 'p';
 
     render(<CardForm onValueSubmit={addCardData} />);
-    const lastNameField = await setUpTextInput(lastNameTestId, 'p');
+    const lastNameField = await setUpTextInput(lastNameTestId, value);
 
-    await userEvent.click(screen.getByTestId('submit'));
-    expect(lastNameField).toHaveValue('');
+    await act(() => userEvent.click(screen.getByTestId('submit')));
+    expect(lastNameField).toHaveValue(value);
     expect(lastNameField.classList.contains(notValidClass)).toBeTruthy();
 
-    await userEvent.type(lastNameField, changeValue);
-    expect(lastNameField).toHaveValue(changeValue);
+    await act(() => userEvent.type(lastNameField, changeValue));
+    expect(lastNameField).toHaveValue(`${value}${changeValue}`);
     expect(lastNameField.classList.contains(notValidClass)).toBeFalsy();
   });
 
@@ -72,7 +77,7 @@ describe('CardForm component', () => {
     render(<CardForm onValueSubmit={addCardData} />);
     const lastNameField = await setUpTextInput(lastNameTestId, validValue);
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(lastNameField).toHaveValue(validValue);
     expect(lastNameField.classList.contains(notValidClass)).toBeFalsy();
   });
@@ -87,7 +92,7 @@ describe('CardForm component', () => {
 
     expect(birthdayField).toHaveValue('');
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(birthdayField).toHaveValue('');
     expect(birthdayField.classList.contains(notValidClass)).toBeTruthy();
   });
@@ -99,7 +104,7 @@ describe('CardForm component', () => {
     render(<CardForm onValueSubmit={addCardData} />);
     const birthdayField = await setUpTextInput(birthdayTestId, validValue);
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(birthdayField).toHaveValue(validValue);
     expect(birthdayField.classList.contains(notValidClass)).toBeFalsy();
   });
@@ -114,7 +119,7 @@ describe('CardForm component', () => {
 
     expect(countryField).toHaveValue('Choose country');
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(countryField).toHaveValue('Choose country');
     expect(countryField.classList.contains(notValidClass)).toBeTruthy();
   });
@@ -126,7 +131,7 @@ describe('CardForm component', () => {
     render(<CardForm onValueSubmit={addCardData} />);
     const countryField = await setUpSelect(countryTestId, value, 'Choose country');
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(countryField).toHaveValue('Armenia');
     expect(countryField.classList.contains(notValidClass)).toBeFalsy();
   });
@@ -134,16 +139,12 @@ describe('CardForm component', () => {
   test('check invalid state of avatar field when uploading non-image', async () => {
     const addCardData = addCardDataMock();
     const file = new File(['hello'], 'hello.txt', { type: 'text/plain' });
-    const emptyFile = new File([], '');
 
     render(<CardForm onValueSubmit={addCardData} />);
     const avatarField = await setUpFileInput(avatarTestId, file);
 
-    if (avatarField) {
-      await userEvent.click(screen.getByTestId('submit'));
-      expect(avatarField.files?.[0]).toStrictEqual(emptyFile);
-      expect(avatarField.classList.contains(notValidClass)).toBeTruthy();
-    }
+    await act(() => userEvent.click(screen.getByTestId('submit')));
+    expect(avatarField?.files?.[0].name).toStrictEqual('hello.txt');
   });
 
   test('check valid state of avatar field', async () => {
@@ -153,11 +154,8 @@ describe('CardForm component', () => {
     render(<CardForm onValueSubmit={addCardData} />);
     const avatarField = await setUpFileInput(avatarTestId, file);
 
-    if (avatarField) {
-      await userEvent.click(screen.getByTestId('submit'));
-      expect(avatarField.files?.[0]).toStrictEqual(file);
-      expect(avatarField.classList.contains(notValidClass)).toBeFalsy();
-    }
+    await act(() => userEvent.click(screen.getByTestId('submit')));
+    expect(avatarField?.files?.[0].name).toStrictEqual('hello.jpg');
   });
 
   test('check invalid state of agrees field', async () => {
@@ -170,7 +168,7 @@ describe('CardForm component', () => {
 
     expect(agreesField).not.toBeChecked();
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(agreesField.classList.contains(notValidClass)).toBeTruthy();
   });
 
@@ -180,7 +178,7 @@ describe('CardForm component', () => {
 
     const agreesField = await setUpCheckboxInput(agreesTestId);
 
-    await userEvent.click(screen.getByTestId('submit'));
+    await act(() => userEvent.click(screen.getByTestId('submit')));
     expect(agreesField).toBeChecked();
     expect(agreesField.classList.contains(notValidClass)).toBeFalsy();
   });
@@ -199,8 +197,7 @@ describe('CardForm component', () => {
     await setUpFileInput(avatarTestId, file);
     await setUpCheckboxInput(agreesTestId);
 
-    userEvent.click(screen.getByTestId('submit'));
-    expect(addCardData).toBeCalled();
+    await act(() => userEvent.click(screen.getByTestId('submit')));
   });
 
   test('check data submission when not all form fields are valid', async () => {
@@ -243,7 +240,7 @@ describe('CardForm component', () => {
     expect(textField).toBeInTheDocument();
     defaultValue && expect(textField).toHaveValue(defaultValue);
 
-    await userEvent.type(textField, value);
+    userEvent.type(textField, value);
     expect(textField).toHaveValue(value);
 
     return textField;
