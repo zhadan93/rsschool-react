@@ -11,7 +11,7 @@ type LikesProps = {
 
 const Likes: React.FC<LikesProps> = ({ likes, className }) => {
   return (
-    <span className={classNames('likes', className)}>
+    <span data-testid="picture-search-card-likes" className={classNames('likes', className)}>
       <LikeIcon className="likes__icon" />
       {likes}
     </span>

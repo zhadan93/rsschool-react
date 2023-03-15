@@ -1,5 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import React from 'react';
 import PicturesSearch from '.';
@@ -9,7 +10,8 @@ import {
   testCatPicturesSearchData,
   testPicturesSearchErrors,
 } from '../../test/testData';
-import userEvent from '@testing-library/user-event';
+
+import localStorageMock from '../../test/localStorageMock';
 
 jest.mock('axios');
 const mockAxios = axios as jest.Mocked<typeof axios>;
@@ -75,10 +77,48 @@ describe('PicturesSearch component', () => {
     userEvent.type(searchbar, 'fff{enter}');
 
     await waitFor(() => {
-      screen.debug();
       expect(screen.getByText(`${errorStatus}`)).toBeInTheDocument();
     });
 
     expect(mockAxios.get).toHaveBeenCalledTimes(2);
+  });
+
+  test('Save search value in localStorage during PicturesSearch component’s unmount', async () => {
+    const store = localStorageMock();
+
+    const { setItem } = store;
+
+    const searchKey = 'cardsSearchBar';
+    const searchValue = 'test';
+
+    const { unmount } = render(<PicturesSearch />);
+
+    userEvent.type(screen.getByTestId('search'), `${searchValue}{enter}`);
+
+    unmount();
+    expect(setItem).toBeCalled();
+    expect(setItem).toHaveBeenCalledWith(searchKey, searchValue);
+  });
+
+  test('Get the value from the local storage when mounting the component', async () => {
+    const store = localStorageMock();
+
+    const { getItem, setItem } = store;
+
+    const searchKey = 'cardsSearchBar';
+    const searchValue = 'now';
+    const { unmount } = render(<PicturesSearch />);
+
+    userEvent.type(screen.getByTestId('search'), `${searchValue}{enter}`);
+
+    unmount();
+    expect(setItem).toHaveBeenCalledWith(searchKey, searchValue);
+
+    await act(() => {
+      render(<PicturesSearch />);
+    });
+
+    expect(getItem).toBeCalled();
+    expect(screen.getByTestId('search')).toHaveValue(searchValue);
   });
 });
