@@ -12,15 +12,14 @@ const searchbarKey = 'cardsSearchBar';
 const defaultQueryStringParameters = 'mountain';
 
 const PicturesSearch = () => {
-  const localStorageSearchbarValue = useMemo(() => localStorage.getItem(searchbarKey), []);
+  const defaultSearchValue = useMemo(() => localStorage.getItem(searchbarKey) ?? '', []);
 
   const [queryStringParameters, setQueryStringParameters] = useState(
-    localStorageSearchbarValue || defaultQueryStringParameters
+    defaultSearchValue || defaultQueryStringParameters
   );
 
   const [data, isLoaded, errors] = useData(queryStringParameters);
 
-  const defaultSearchValue = localStorageSearchbarValue ?? '';
   const searchValue = useRef(defaultSearchValue);
 
   const handleEnter = useCallback((value: string) => {
@@ -34,7 +33,7 @@ const PicturesSearch = () => {
     return () => {
       localStorage.setItem(searchbarKey, searchValue.current);
     };
-  }, [searchValue]);
+  }, []);
 
   return (
     <div data-testid="picture-search" className="container">
