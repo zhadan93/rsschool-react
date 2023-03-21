@@ -44,9 +44,8 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
-    formState: { errors, isValid, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isDirty },
   } = useForm<FormDetails>({
     defaultValues: {
       firstName: '',
@@ -66,12 +65,7 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
   const avatar = { ...register('avatar', avatarOptions) };
   const agrees = { ...register('agrees', agreesOptions) };
 
-  const [isDisabled, setIsDisabled] = useState(true);
   const [isSuccessful, setIsSuccessful] = useState(false);
-
-  const onError = () => {
-    setIsDisabled(true);
-  };
 
   const onSubmit = handleSubmit((data) => {
     const [male, female] = sexValues;
@@ -85,20 +79,7 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
       avatar: URL.createObjectURL(avatar[0]),
       sex: sex ? male : female,
     });
-  }, onError);
-
-  useEffect(() => {
-    const subscription = watch((value) => {
-      if (value || isSubmitSuccessful) {
-        setIsDisabled(false);
-        subscription.unsubscribe();
-      }
-    });
-  }, [watch, isSubmitSuccessful]);
-
-  useEffect(() => {
-    isValid && setIsDisabled(false);
-  }, [isValid]);
+  });
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -108,7 +89,6 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
         setIsSuccessful(false);
         clearTimeout(timerId);
       }, 4000);
-      setIsDisabled(true);
     }
   }, [isSubmitSuccessful, reset]);
 
@@ -182,7 +162,7 @@ const CardForm: React.FC<CardFormProps> = ({ onValueSubmit }) => {
           data-testid="submit"
           className="card-form__submit"
           value="Create Card"
-          disabled={isDisabled}
+          disabled={!isDirty || !!Object.keys(errors).length}
         />
       </form>
       <Notification
