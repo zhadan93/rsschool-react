@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState } from 'react';
 
 import PictureSearchCardList from 'components/PicturesSearchCards/PictureSearchCardList';
 import Searchbar from 'components/Searchbar';
@@ -12,28 +12,18 @@ const searchbarKey = 'cardsSearchBar';
 const defaultQueryStringParameters = 'mountain';
 
 const PicturesSearch = () => {
-  const defaultSearchValue = useMemo(() => localStorage.getItem(searchbarKey) ?? '', []);
-
   const [queryStringParameters, setQueryStringParameters] = useState(
-    defaultSearchValue || defaultQueryStringParameters
+    () => localStorage.getItem(searchbarKey) ?? ''
   );
 
-  const [data, isLoaded, errors] = useData(queryStringParameters);
+  const [data, isLoaded, errors] = useData(queryStringParameters || defaultQueryStringParameters);
 
-  const searchValue = useRef(defaultSearchValue);
-
-  const handleEnter = useCallback((value: string) => {
+  function handleEnter(value: string) {
     if (value) {
       setQueryStringParameters(value);
-      searchValue.current = value;
+      localStorage.setItem(searchbarKey, value);
     }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem(searchbarKey, searchValue.current);
-    };
-  }, []);
+  }
 
   return (
     <div data-testid="picture-search" className="container">
@@ -45,7 +35,7 @@ const PicturesSearch = () => {
         <Searchbar
           onSearchSend={handleEnter}
           className="picture-search__searchbar"
-          defaultValue={defaultSearchValue}
+          defaultValue={queryStringParameters}
         />
       </div>
       <div className="picture-search__content">

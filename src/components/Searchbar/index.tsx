@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, InputHTMLAttributes, memo } from 'react';
+import React, { KeyboardEvent, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 import MagnifierIcon from 'components/Icons/MagnifierIcon';
@@ -32,4 +32,4 @@ const Searchbar: React.FC<SearchbarProps> = ({ className, onSearchSend, ...other
   );
 };
 
-export default memo(Searchbar);
+export default Searchbar;
